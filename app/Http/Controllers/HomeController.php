@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,8 +24,15 @@ class HomeController extends Controller
      */
 
     public function index(Request $request) {
-        $request->user()->authorizeRoles(['user', 'admin']);
-        return view('home');
+       $value= $request->user()->authorizeRoles(['user', 'admin']);
+        $users = User::all();
+       if($value){
+           return view('home',["users"=>$users]);
+       }else{
+           return view('prueba',["users"=>$users]);
+       }
+
+
     }
 
     /*public function someAdminStuff(Request $request) {

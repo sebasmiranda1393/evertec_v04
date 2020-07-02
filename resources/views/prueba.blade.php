@@ -7,18 +7,19 @@
                 <div class="card-header">Unhatorized</div>
                 <div class="card-body">
 
-                    <table border = "1">
+                    <table class="table table-striped" border = "1">
+                        <thead>
                         <tr>
-                            <td>Id</td>
-                            <td>Name</td>
-                            <td>Email</td>
-                            <td>Created_at</td>
-                            <td>Update_at</td>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Created_at</th>
+                            <th scope="col">Update_at</th>
                         </tr>
+                        </thead>
                         @foreach ($users as $user)
-
                             <tr>
-                                <td>{{ $user->id}}</td>
+                                <th scope="row">{{ $user->id}}</th>
                                 <td>{{ $user->name}}</td>
                                 <td>{{ $user->email}}</td>
                                 <td>{{ $user->created_at}}</td>

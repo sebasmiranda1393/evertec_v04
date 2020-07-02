@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -23,8 +22,8 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Created_at</th>
                                 <th scope="col">Update_at</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
                             </tr>
                             </thead>
                             @foreach ($users as $user)
@@ -36,11 +35,17 @@
                                     <td>{{ $user->created_at}}</td>
                                     <td>{{ $user->updated_at}}</td>
                                     <td>
+                                        @if($user->status==1)
+                                            Habilitado
+                                        @endif
+                                        @if($user->status==0)
+                                                Desabilitado
+                                        @endif
+                                    </td>
+                                    <td>
                                         <a href="{{ route('posts.edit', $user->id) }}" class="label label-warning">Edit</a>
                                      </td>
-                                     <td>
-                                         <a href="" class="label label-danger" onclick="return confirm('Are you sure to delete?')">Delete</a>
-                                     </td>
+
                                 </tr>
                             @endforeach
                         </table>

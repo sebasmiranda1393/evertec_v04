@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use DB;
@@ -9,22 +7,25 @@ use Illuminate\Http\Request;
 
 use Session;
 
-class PostsController extends Controller
-{
-    public function index(){
+class PostsController extends Controller{
+    public function index()
+    {
         $posts = Post::orderBy('created','desc')->get();
         return view('posts.index', ['posts' => $posts]);
     }
 
-    public function details($id){
+    public function details($id)
+    {
         $post = Post::find($id);
     }
 
-    public function add(){
+    public function add()
+    {
         return view('posts.add');
     }
 
-    public function insert(Request $request){
+    public function insert(Request $request)
+    {
         $this->validate($request, [
             'title' => 'required',
             'content' => 'required'
@@ -36,26 +37,32 @@ class PostsController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $user = User::find($id);
         return view('edit',["user"=>$user]);
     }
 
-    public function update($id, Request $request){
-
-      /* $status=$request->get('status');
+    /**
+     * Show the application dashboard.
+     * @author sebastian miranda
+     * @param String $id
+     * @param Request $request
+     * @return A View HOME
+     */
+    public function update($id, Request $request)
+    {
+        /* $status=$request->get('status');
         $name=$request->get('name');
         echo $name;
         echo $status;*/
-
-      $this->validate($request, [
+        $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
             'status' => 'required'
         ]);
 
-        $postData = $request->all();
-
+       // $postData = $request->all();
        // User::find($id)->update($postData);
 
         DB::Table('users')->where('id',$id)->update(
@@ -72,28 +79,13 @@ class PostsController extends Controller
         return redirect()->route('home');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         Post::find($id)->delete();
         Session::flash('success_msg', 'Post deleted successfully!');
     }
-    /*public function changeStatus($id,$currentStatus){
-        $currentUser = User::find($id);
-        if($currentStatus==0){
-            $currentUser->update([
-                'status' =>  $request->input('name', $user->name)
-            ]);
-
-            $result =  DB::Table('users')->where('id',$id)->update(
-                array(
-                    'status' =>  $request->name
-                )
-            );
-        }else{
-
-        }
-    }*/
 
     public function back(){
         return redirect()->route('home');
     }
-}
+    }

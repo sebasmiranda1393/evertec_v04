@@ -39,7 +39,7 @@
                                             Habilitado
                                         @endif
                                         @if($user->status==0)
-                                                Desabilitado
+                                                Deshabilitado
                                         @endif
                                     </td>
                                     <td>

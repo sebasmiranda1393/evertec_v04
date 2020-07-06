@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -18,7 +16,7 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name"  name="name" placeholder="ingrese email"
+                                <input type="text" class="form-control" id="name"  name="name" placeholder="ingrese nombre"
                                 value={{ $user->name}}>
                             </div>
                             <div class="form-group">

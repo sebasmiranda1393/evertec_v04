@@ -4,8 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Role;
 
-class UserTableSeeder extends Seeder
-{
+class UserTableSeeder extends Seeder{
     /**
      * Run the database seeds.
      *
@@ -30,4 +29,4 @@ class UserTableSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_admin);
     }
-}
+    }

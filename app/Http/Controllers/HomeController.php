@@ -3,8 +3,8 @@
 use App\User;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller{
-
+class HomeController extends Controller
+{
     /**
      * Create a new controller instance.
      *
@@ -33,12 +33,6 @@ class HomeController extends Controller{
            {
                return view('prueba',["users"=>$users]);
            }
-
-
     }
 
-    /*public function someAdminStuff(Request $request) {
-        $request->user()->authorizeRoles('admin');
-        return view('some.view');
-    }*/
-    }
+}

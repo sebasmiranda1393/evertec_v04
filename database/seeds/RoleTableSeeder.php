@@ -3,7 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 
-class RoleTableSeeder extends Seeder {
+class RoleTableSeeder extends Seeder
+{
     /**
      * Run the database seeds.
      *
@@ -20,4 +21,4 @@ class RoleTableSeeder extends Seeder {
         $role->description = 'User';
         $role->save();
     }
-    }
+}

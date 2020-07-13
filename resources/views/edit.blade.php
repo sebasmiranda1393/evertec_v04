@@ -26,6 +26,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="email">Password</label>
+                                <input type="password" class="form-control" id="password"  name="password"placeholder="ingresa password"
+                                       value={{ $user->password}}>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="status">Change status</label>
                                 <select class="form-control" id="status"  name="status">
                                     <option value="1">Habilitar</option>

@@ -3,7 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 
-class DatabaseSeeder extends Seeder{
+class DatabaseSeeder extends Seeder
+{
     /**
      * Seed the application's database.
      *
@@ -11,9 +12,7 @@ class DatabaseSeeder extends Seeder{
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
-        // La creación de datos de roles debe ejecutarse primero
-        $this->call(RoleTableSeeder::class);    // Los usuarios necesitarán los roles previamente generados
+        $this->call(RoleTableSeeder::class);
         $this->call(UserTableSeeder::class);
     }
-    }
+}

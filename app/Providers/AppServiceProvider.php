@@ -3,7 +3,8 @@
 use Illuminate\Support\ServiceProvider;
 use Schema;
 
-class AppServiceProvider extends ServiceProvider{
+class AppServiceProvider extends ServiceProvider
+{
     /**
      * Register any application services.
      *
@@ -23,4 +24,4 @@ class AppServiceProvider extends ServiceProvider{
     {
         Schema::defaultStringLength(191);
     }
-    }
+}

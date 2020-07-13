@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Unhatorized</div>
+                <div class="card-header">LIST OF CUSTOMER</div>
                 <div class="card-body">
 
                     <table class="table table-striped" border = "1">

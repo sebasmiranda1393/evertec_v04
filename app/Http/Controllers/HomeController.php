@@ -23,16 +23,13 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $value= $request->user()->authorizeRoles(['user', 'admin']);
+        $value = $request->user()->authorizeRoles(['user', 'admin']);
         $users = User::all();
-       if($value)
-       {
-           return view('home',["users"=>$users]);
-       }
-       else
-           {
-               return view('prueba',["users"=>$users]);
-           }
+        if ($value) {
+            return view('home', ["users" => $users]);
+        } else {
+            return view('prueba', ["users" => $users]);
+        }
     }
 
 }

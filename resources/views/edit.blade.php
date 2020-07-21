@@ -12,7 +12,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form action="{{ route('posts.update', $user->id) }}" method="POST" class="form-horizontal">
+                        <form action="{{ route('customer.update', $user->id) }}" method="POST" class="form-horizontal">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="name">Name</label>
@@ -44,7 +44,7 @@
                                 <div class=" col-sm-3">
                                 </div>
                                 <div class=" col-sm-4">
-                                    <a href="{{ URL::route('posts.back') }}" class="btn btn-primary btn-lg"> Atras </a>
+                                    <a href="{{ URL::route('customer.back') }}" class="btn btn-primary btn-lg"> Atras </a>
                                 </div>
                                 <div class="col-sm-4">
                                     <input type="submit" class=" btn btn-primary btn-lg" value="guardar" />

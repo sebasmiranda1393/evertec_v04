@@ -16,16 +16,16 @@
                     </div>
                 </a>
             </li>
-            <li class="nav-item pt-3 active">
-                <a class="nav-link active" href="#">
+            <li class="nav-item pt-3">
+                <a class="nav-link {{ Request::is('home') ? 'btn-info' : '' }}" href="{{ route('home') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
                     <span class="menu-title">Customers</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('product') }}">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
-                    <span class="menu-title">Prodcuts</span>
+                    <span class="menu-title">Products</span>
                 </a>
             </li>
         </ul>

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +27,11 @@ Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/product/index', 'ProductController@index')->name('product');
 Route::get('/product/create', 'ProductController@create')->name('product.create');
-Route::post('/product/save', 'ProductController@save')->name('product.save');
+Route::post('/product/save',  'ProductController@save')->name('product.save');
+Route::get('/product/edit/{id}', 'ProductController@edit')->name('product.edit');
+Route::post('/product/update/{id}',  'ProductController@update')->name('product.update');
+Route::get('/product/search',  'ProductController@search')->name('product.search');
+
 
 
 

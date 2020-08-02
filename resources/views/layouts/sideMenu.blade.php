@@ -19,13 +19,13 @@
             <li class="nav-item pt-3">
                 <a class="nav-link {{ Request::is('home') ? 'btn-info' : '' }}" href="{{ route('home') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
-                    <span class="menu-title">Customers</span>
+                    <span class="menu-title">Clientes</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
-                    <span class="menu-title">Products</span>
+                    <span class="menu-title">Productos</span>
                 </a>
             </li>
         </ul>

@@ -5,17 +5,17 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Cree un nuevo producto</div>
+                    <div class="card-header">Edite el producto</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('product.save') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('product.update', $product->id)}}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre producto</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name')
-                                        is-invalid @enderror" name="name" value=""
+                                        is-invalid @enderror" name="name"  value={{ $product->name}}
                                            required autocomplete="name" autofocus>
 
                                 </div>
@@ -25,8 +25,8 @@
                                 <label for="description" class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
                                 <div class="col-md-6">
-                                    <textarea required id="description" name="description" cols="30" rows="5"
-                                              class="form-control" > </textarea>
+                                    <textarea required id="description" name="description"  cols="30" rows="5"
+                                              class="form-control" >{{ $product->description}} </textarea>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -40,8 +40,9 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Precio venta</label>
 
                                 <div class="col-md-6">
-                                    <input id="price_sell" type="number"
-                                           class="form-control @error('password') is-invalid @enderror" name="price_sell"
+                                    <input id="sale_price" type="number"
+                                           class="form-control  @error('password') is-invalid @enderror"
+                                           value={{ $product->sale_price}} name="sale_price"
                                            required autocomplete="new-password">
 
                                     @error('password')
@@ -57,8 +58,9 @@
                                     Precio compra</label>
 
                                 <div class="col-md-6">
-                                    <input id="price-buy" type="number" class="form-control"
-                                           name="price-buy" required autocomplete="new-password">
+                                    <input id="purchase_price" type="number" class="form-control"
+                                           name="purchase_price" value={{ $product->purchase_price}} required
+                                           autocomplete="new-password">
                                 </div>
                             </div>
 
@@ -67,10 +69,21 @@
                                     Existencia</label>
 
                                 <div class="col-md-6">
-                                    <input id="quantity" type="number" class="form-control"
-                                           name="quantity" required autocomplete="new-password">
+                                    <input id="available" type="number" class="form-control"
+                                           name="available" value={{ $product->available}}  required autocomplete="new-password">
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="status" class="col-md-4 col-form-label text-md-right"> Cambiar estado </label>
+                                <div class="col-md-6">
+                                <select class="form-control" id="status"  name="status">
+                                    <option value=1>Habilitar</option>
+                                    <option value=0>Desabilitar</option>
+                                </select>
+                                </div>
+                            </div>
+
                             <div class="form-group row ">
                                 <div class="col-md-6 offset-4 mt-3 custom-file">
                                     <input id="image" type="file" name="image" />

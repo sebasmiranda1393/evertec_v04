@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Edit') }}</div>
+                    <div class="card-header">Editar cliente</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -15,24 +15,19 @@
                         <form action="{{ route('customer.update', $user->id) }}" method="POST" class="form-horizontal">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Nombre</label>
                                 <input type="text" class="form-control" id="name"  name="name" placeholder="ingrese nombre"
                                 value={{ $user->name}}>
                             </div>
                             <div class="form-group">
-                                <label for="email">Email address</label>
+                                <label for="email">Correo electronico</label>
                                 <input type="email" class="form-control" id="email"  name="email"placeholder="ingresa email"
                                value={{ $user->email}}>
                             </div>
 
-                            <div class="form-group">
-                                <label for="email">Password</label>
-                                <input type="password" class="form-control" id="password"  name="password"placeholder="ingresa password"
-                                       value={{ $user->password}}>
-                            </div>
 
                             <div class="form-group">
-                                <label for="status">Change status</label>
+                                <label for="status">Cambiar estado</label>
                                 <select class="form-control" id="status"  name="status">
                                     <option value="1">Habilitar</option>
                                     <option value="0">Desabilitar</option>

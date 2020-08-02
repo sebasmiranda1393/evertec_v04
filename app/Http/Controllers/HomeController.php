@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class HomeController extends Controller
         if ($value) {
             return view('home', ["users" => $users]);
         } else {
-            return view('prueba', ["users" => $users]);
+            $products = Product::all();
+            return view('product', ["products" => $products]);
         }
     }
 

@@ -18,7 +18,10 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string("product", 255)->nullable();
             $table->text("description")->nullable();
-            $table->decimal("price", 6, 2);
+            $table->decimal("purchase_price", 6, 2);
+            $table->decimal("sale_price", 6, 2);
+            $table->boolean('available');
+            $table->string('productimg');
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();

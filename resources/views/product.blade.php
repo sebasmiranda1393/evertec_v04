@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <input type="submit" class=" btn btn-primary btn-lg" value="Crear" />
+                <a href="{{ route('product.create') }}" class="btn btn-primary btn-lg"> Crear </a>
             </div>
         </div>
 
@@ -59,7 +59,7 @@
                             <td>{{ $product->price}}</td>
                             <td>{{ Auth::user()->name }}</td>
                             <td>
-                                <a href="{{ route('product.create') }}"
+                                <a href="#"
                                    class="label label-warning">Edit</a>
                             </td>
                         </tr>

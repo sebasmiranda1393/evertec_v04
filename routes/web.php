@@ -26,6 +26,7 @@ Route::post('/customer/update/{id}', 'CustomerController@update')->name('custome
 Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/product/index', 'ProductController@index')->name('product');
+Route::get('/product/create', 'ProductController@create')->name('product.create');
 
 
 

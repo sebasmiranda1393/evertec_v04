@@ -19,4 +19,9 @@ class ProductController extends Controller
         $products = Product::all();
         return view('product', ["products" => $products]);
     }
+
+    public function create(Request $request)
+    {
+        return view('product/create_products');
+    }
 }

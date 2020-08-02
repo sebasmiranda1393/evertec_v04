@@ -16,12 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string("product", 255)->nullable();
+            $table->string("name", 255)->nullable();
             $table->text("description")->nullable();
             $table->decimal("purchase_price", 6, 2);
             $table->decimal("sale_price", 6, 2);
             $table->boolean('available');
-            $table->string('productimg');
+            $table->string('productimg')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();

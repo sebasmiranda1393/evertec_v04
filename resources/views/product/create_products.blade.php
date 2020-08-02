@@ -8,7 +8,7 @@
                     <div class="card-header">Cree un nuevo producto</div>
 
                     <div class="card-body">
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('product.save') }}">
                             @csrf
 
                             <div class="form-group row">
@@ -23,11 +23,11 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">Descripcion</label>
+                                <label for="description" class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
                                 <div class="col-md-6">
-                                    <textarea required id="descripcion" name="descripcion" cols="30" rows="5"
-                                              class="form-control"></textarea>
+                                    <textarea required id="description" name="description" cols="30" rows="5"
+                                              class="form-control" > </textarea>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -41,8 +41,8 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Precio venta</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="number"
-                                           class="form-control @error('password') is-invalid @enderror" name="password"
+                                    <input id="price_sell" type="number"
+                                           class="form-control @error('password') is-invalid @enderror" name="price_sell"
                                            required autocomplete="new-password">
 
                                     @error('password')
@@ -58,8 +58,8 @@
                                     Precio compra</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="number" class="form-control"
-                                           name="password_confirmation" required autocomplete="new-password">
+                                    <input id="price-buy" type="number" class="form-control"
+                                           name="price-buy" required autocomplete="new-password">
                                 </div>
                             </div>
 
@@ -68,13 +68,13 @@
                                     EXistencia</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="number" class="form-control"
-                                           name="password_confirmation" required autocomplete="new-password">
+                                    <input id="quantity" type="number" class="form-control"
+                                           name="quantity" required autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <div class="col-md-6 offset-4 mt-3">
-                                    <input type="file" name="photo[]"/>
+                                <div class="col-md-6 offset-4 mt-3 custom-file">
+                                    <input id="image" type="file" name="image" />
                                 </div>
                             </div>
                             <div class="form-group row mb-0 mt-5">

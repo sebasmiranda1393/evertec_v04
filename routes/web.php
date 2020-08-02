@@ -27,6 +27,7 @@ Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/product/index', 'ProductController@index')->name('product');
 Route::get('/product/create', 'ProductController@create')->name('product.create');
+Route::post('/product/save', 'ProductController@save')->name('product.save');
 
 
 

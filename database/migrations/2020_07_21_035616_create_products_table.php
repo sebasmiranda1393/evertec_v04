@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string("name", 255)->nullable();
             $table->text("description")->nullable();
-            $table->decimal("purchase_price", 6, 2);
-            $table->decimal("sale_price", 6, 2);
+            $table->double("purchase_price");
+            $table->double("sale_price");
             $table->boolean('available');
             $table->string('productimg')->nullable();
             $table->boolean('status')->default(true);

@@ -22,7 +22,6 @@
                             <th scope="col">Correo electronico</th>
                             <th scope="col">Fecha creado</th>
                             <th scope="col">Fecha actualizacion</th>
-                            <th scope="col">Estado</th>
                             <th scope="col">Editar</th>
                         </tr>
                         </thead>

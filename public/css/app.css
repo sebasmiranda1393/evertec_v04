@@ -10926,5 +10926,10 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+
+    .erika {
+        padding: 25px 50px 75px 100px;
+    }
+
 }
 

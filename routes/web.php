@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,14 +21,17 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::get('/posts', 'CustomerController@index')->name('posts.index');
-Route::get('/posts/details/{id}', 'CustomerController@details')->name('posts.details');
-Route::get('/posts/add', 'CustomerController@add')->name('posts.add');
-Route::post('/posts/insert', 'CustomerController@insert')->name('posts.insert');
-Route::get('/posts/edit/{id}', 'CustomerController@edit')->name('posts.edit');
-Route::post('/posts/update/{id}', 'CustomerController@update')->name('posts.update');
-Route::get('/posts/delete/{id}', 'CustomerController@delete')->name('posts.delete');
-Route::get('/posts/back', 'CustomerController@back')->name('posts.back');
+Route::get('/customer/edit/{id}', 'CustomerController@edit')->name('customer.edit');
+Route::post('/customer/update/{id}', 'CustomerController@update')->name('customer.update');
+Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
+Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
+Route::get('/product/index', 'ProductController@index')->name('product');
+Route::get('/product/create', 'ProductController@create')->name('product.create');
+Route::post('/product/save',  'ProductController@save')->name('product.save');
+Route::get('/product/edit/{id}', 'ProductController@edit')->name('product.edit');
+Route::post('/product/update/{id}',  'ProductController@update')->name('product.update');
+Route::get('/product/search/{id}',  'ProductController@search')->name('product.search');
+
 
 
 

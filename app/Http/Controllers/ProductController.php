@@ -50,7 +50,17 @@ class ProductController extends Controller
 
     public function update($id, Request $request)
     {
-        echo $request->input('status');
+        if ($request->hasfile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->input('name') . time() . '.' . $extension;
+            $file->move('image/products', $filename);
+            DB::Table('products')->where('id', $id)->update(
+                array(
+                    'productimg' => $filename
+                )
+            );
+        }
         DB::Table('products')->where('id', $id)->update(
             array(
                 'name' => $request->get('name'),
@@ -76,7 +86,8 @@ class ProductController extends Controller
         $namesearch = $request->get('namesearch');
         $valorsearch = $request->get('valorsearch');
         $products = DB::Table('products')->where('name', 'like', '%' . $namesearch . '%')
-            ->where('sale_price', 'like', '%' . $valorsearch . '%')->paginate(5);
+            ->where('sale_price', 'like', '%' . $valorsearch . '%')
+            ->where('status', true)->paginate(4);
         if ($id == 0) {
             return view('product', ["products" => $products]);
         } else {

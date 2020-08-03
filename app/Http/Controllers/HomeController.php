@@ -2,6 +2,7 @@
 
 use App\Product;
 use App\User;
+use DB;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,8 +30,8 @@ class HomeController extends Controller
         if ($value) {
             return view('home', ["users" => $users]);
         } else {
-            $products = Product::all();
-            return view('customer/homeCustomer', ["products" => $products]);
+            $products =  DB::table('products')->where('status', true)->paginate(4);
+            return view('customer/homeCustomer', ['products' => $products]);
         }
     }
 

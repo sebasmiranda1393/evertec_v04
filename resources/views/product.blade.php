@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <form action="{{ route('product.search') }}" method="GET" class="form-horizontal">
+        <form action="{{ route('product.search', 0) }}" method="GET" class="form-horizontal">
             {{ csrf_field() }}
             <div class="row ">
                 <div class="col-md-3 offset-md-2">

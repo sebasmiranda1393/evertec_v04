@@ -45,6 +45,7 @@ class ProductController extends Controller
 
         }
         $product->save();
+        return redirect()->route('product');
     }
 
     public function update($id, Request $request)
@@ -70,15 +71,17 @@ class ProductController extends Controller
         return view('product/editProducts', ["product" => $product]);
     }
 
-    public function search(Request $request)
+    public function search(Request $request, $id)
     {
         $namesearch = $request->get('namesearch');
         $valorsearch = $request->get('valorsearch');
-        $products = DB::Table('products')->where('name', 'like', '%' . $namesearch . '%' )
-                                         ->where('sale_price', 'like', '%' . $valorsearch . '%')->paginate(5);
-        return view('product', ["products" => $products]);
-
-
+        $products = DB::Table('products')->where('name', 'like', '%' . $namesearch . '%')
+            ->where('sale_price', 'like', '%' . $valorsearch . '%')->paginate(5);
+        if ($id == 0) {
+            return view('product', ["products" => $products]);
+        } else {
+            return view('customer/homeCustomer', ["products" => $products]);
+        }
     }
 
 }

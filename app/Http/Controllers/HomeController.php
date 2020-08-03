@@ -30,7 +30,7 @@ class HomeController extends Controller
             return view('home', ["users" => $users]);
         } else {
             $products = Product::all();
-            return view('product', ["products" => $products]);
+            return view('customer/homeCustomer', ["products" => $products]);
         }
     }
 

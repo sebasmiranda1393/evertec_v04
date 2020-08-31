@@ -5,6 +5,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <body style="background-color:#AED6F1;">
+
+                    </body>
                     <div class="card-header">Cree un nuevo producto</div>
 
                     <div class="card-body">
@@ -73,7 +76,9 @@
                             </div>
                             <div class="form-group row ">
                                 <div class="col-md-6 offset-4 mt-3 custom-file">
-                                    <input id="image" type="file" name="image" />
+                                    <tr>
+                                        <input id="image" type="file" name="image" />
+                                    </tr>
                                 </div>
                             </div>
 

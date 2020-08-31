@@ -2,6 +2,9 @@
 @section('content')
     <div class="container">
         <div class="row ">
+            <body style="background-color:#B5D4C8;">
+
+            </body>
             <div class="col-md-10 offset-md-2">
                 <div class="card-header">LISTA DE CLIENTES</div>
                 @if (session('status'))

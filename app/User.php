@@ -47,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param Array of string $roles
      * @return A Boolean
      */
-    public function authorizeRoles($roles)
+    public function  authorizeRoles($roles)
     {
         if ($this->hasAnyRole($roles))
         {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
-        <form action="{{ route('product.search', 1) }}" method="GET" class="form-horizontal">
+
+        <form action="{{ route('product.search', 1) }}" method="GET" class="form-container">
             {{ csrf_field() }}
             <div class="row p-3 pb-4">
                 <div class="col-md-3 offset-1">
@@ -22,6 +22,10 @@
                     <input type="submit" class=" btn btn-primary " value="Buscar"/>
                 </div>
 
+                <div class=" col-sm-1">
+                    <a href="{{ URL::route('customer.back') }}" class="btn btn-primary "> Atras </a>
+                </div>
+
             </div>
 
         </form>
@@ -31,13 +35,21 @@
                     <div class="product-grid2">
                         <div class="product-image2">
                             <a href="#">
-                                <img src="{{ asset('image/products/'.$product->productimg)}}" alt="profile"> </a>
-                            <a class="add-to-cart" href="">Añadir al carro</a>
+                                <div class="popup" onclick="myFunction()">Click me!
+                                    <span class="popuptext" id="myPopup">Popup text...</span>
+                                </div>
+
+                            @if($product->productimg==null)
+                                    <img src="{{ asset('image/imagen-no-disponible.png') }}">
+
+                                @else
+                                    <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
+                            @endif
+                            <a class="add-to-cart" href="{{ route('product.add-to-cart', $product->id) }}">Añadir al carro</a>
                         </div>
                         <div class="product-content">
                             <h3 class="title"><a href="#">{{ $product->name}}</a></h3>
-                            <span class="price">{{ $product->description}}</span>
-                            <span class="price">${{ $product->sale_price}}</span>
+                            <span class="price">${{ $product->sale_price}}</span>edit
                         </div>
                     </div>
                 </div>
@@ -48,6 +60,5 @@
                 {{ $products->render() }}
             </div>
         </div>
-    </div>
     <hr>
 @endsection

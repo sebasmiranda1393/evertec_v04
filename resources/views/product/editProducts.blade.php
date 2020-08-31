@@ -4,6 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <body style="background-color:#AED6F1;">
+
+                </body>
                 <div class="card">
                     <div class="card-header">Edite el producto</div>
 
@@ -14,9 +17,10 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre producto</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name')
-                                        is-invalid @enderror" name="name"  value={{ $product->name}}
-                                           required autocomplete="name" autofocus>
+                                    <textarea required id="name"  name="name" cols="30" rows="1"
+                                              class="form-control" >{{ $product->name}} </textarea>
+
+
 
                                 </div>
                             </div>

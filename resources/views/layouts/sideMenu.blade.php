@@ -1,6 +1,8 @@
 <div class="col-md-2">
     <nav class="navbar nav-tabs" id="sidebar">
+
         <ul class="navbar-nav nav">
+
             <li class="nav-item nav-profile border-bottom ">
                 <a href="#" class="nav-link flex-column">
                     <div class="row">
@@ -26,6 +28,12 @@
                 <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
                     <span class="menu-title">Productos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product.customer') }}">
+                    <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <span class="menu-title">catalogo</span>
                 </a>
             </li>
         </ul>

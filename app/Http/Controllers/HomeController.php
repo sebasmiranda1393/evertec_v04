@@ -27,12 +27,27 @@ class HomeController extends Controller
     {
         $value = $request->user()->authorizeRoles(['user', 'admin']);
         $users = User::all();
+
         if ($value) {
             return view('home', ["users" => $users]);
+
         } else {
-            $products =  DB::table('products')->where('status', true)->paginate(4);
-            return view('customer/homeCustomer', ['products' => $products]);
+            $products = DB::table('products')->where('status', true)->paginate(4);
+            return view('customer/home_customer', ['products' => $products]);
         }
     }
+
+    public function indexejemplo()
+    {
+        $products = DB::table('products')->where('status', true)->paginate(4);
+        return view('customer/home_customer', ['products' => $products]);
+    }
+
+    public function home()
+{
+    $products = DB::table('products')->where('status', true)->paginate(4);
+    return view('customer/home_customer', ['products' => $products]);
+}
+
 
 }

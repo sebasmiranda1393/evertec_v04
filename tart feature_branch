@@ -1,0 +1,27 @@
+[33mbc857b2[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m, [m[1;32mfeature/arreglos-segunda-entrega[m[33m)[m Merge pull request #7 from sebasmiranda1393/develop
+[33m853229f[m Merge branch 'feature/funcionalidad_interfaz_cliente' into develop funcionalidad cliente
+[33m932ccd7[m funcionalidad cliente terminada
+[33m1977382[m vista cliente cargando productos
+[33m8bedc22[m actualizar producto sin imagen y filtrar productos
+[33mf44450c[m Merge branch 'feature/creacion-flujo-interfaces-crud-productos' into develop funcion de guardado de un productos sin imagen
+[33m30036dc[m funcionalidad guardar producto sin imagen
+[33m31f59de[m formulario crear producto
+[33m5322d52[m construccion de formulario nuevo producto
+[33m85039ec[m Merge pull request #5 from sebasmiranda1393/feature-OSC-01-login
+[33mb35bf39[m OSC-011 arreglo vista con mismo template
+[33m679502f[m OSC-011 correciones de bachier
+[33m8bd73a8[m Merge pull request #3 from sebasmiranda1393/release
+[33mcc53491[m Merge pull request #2 from sebasmiranda1393/develop
+[33m1fe68ba[m Merge pull request #1 from sebasmiranda1393/feature-OSC-01-login
+[33mcd4a8b1[m OSC-10 mejora y limpiaza de codigo
+[33m1ae7a41[m commit para borrar luego
+[33m746886e[m OSC-09 documentacion
+[33m525ab3b[m OSC-08 habilitar y desabilitar por rol admin
+[33mffdc526[m OSC-07 permisos de rol admin
+[33m66603f7[m OSC-07 tablas de vistas distintas
+[33mb8d5e71[m OSC-06 subir cambios de roles
+[33m2cadc15[m OSC-05 creaciòn de roles y tabla inicial
+[33m852b8bd[m OSC-04 verificacion correo para auth
+[33m1d5f14c[m OSC-02 autenticaciòn con correo
+[33mb9a4ee2[m OSC-02 install auth boostrap etc
+[33m783fe7d[m First commit

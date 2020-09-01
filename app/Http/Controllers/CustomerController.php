@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+
 use App\Post;
 use App\User;
 use DB;
@@ -9,45 +10,47 @@ use Session;
 
 class CustomerController extends Controller
 {
+
     /**
-     * @param $id
+     * @param User $user
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
-        return view('edit',["user"=>$user]);
+        $user = User::find($user->id);
+        return view('edit', ["user" => $user]);
     }
+
 
     /**
-     * Show the application dashboard.
-     * @author sebastian miranda
-     * @param String $id
+     * @param User $user
      * @param Request $request
-     * @return A View HOME
-     **/
-    public function update($id, Request $request)
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(User $user, Request $request)
+{
+    $this->validate($request, [
+        'name' => 'required',
+        'email' => 'required',
+        'status' => 'required'
+    ]);
+
+    DB::Table('users')->where('id', $user->id)->update(
+        array(
+            'status' => $request->get('status'),
+            'name' => $request->get('name'),
+            'email' => $request->get('email')
+        )
+    );
+
+    Session::flash('success_msg', 'Post updated successfully!');
+
+    return redirect()->route('home');
+}
+
+    public function back()
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'status' => 'required'
-        ]);
-
-        DB::Table('users')->where('id',$id)->update(
-            array(
-                'status' =>  $request->get('status'),
-                'name' =>  $request->get('name'),
-                'email' =>  $request->get('email')
-            )
-        );
-
-        Session::flash('success_msg', 'Post updated successfully!');
-
-        return redirect()->route('home');
-    }
-
-    public function back(){
         return redirect()->route('home');
     }
 }

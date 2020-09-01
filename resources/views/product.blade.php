@@ -3,6 +3,9 @@
     <div class="container">
         <form action="{{ route('product.search', 0) }}" method="GET" class="form-horizontal">
             {{ csrf_field() }}
+            <body style="background-color:#AED6F1;">
+
+            </body>
             <div class="row ">
                 <div class="col-md-3 offset-md-2">
                     <div class="input-group mb-3">
@@ -29,7 +32,7 @@
 
         </form>
         <div class="row">
-            @include('layouts.sideMenu')
+            @include('layouts.side_menu')
             <div class="col-md-10">
                 <table class="table mt-5">
                     <thead>

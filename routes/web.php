@@ -21,17 +21,23 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::get('/customer/edit/{id}', 'CustomerController@edit')->name('customer.edit');
-Route::post('/customer/update/{id}', 'CustomerController@update')->name('customer.update');
+Route::get('/customer/edit/{user}', 'CustomerController@edit')->name('customer.edit');
+Route::post('/customer/update/{user}', 'CustomerController@updatproduct.carte')->name('customer.update');
 Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/customer/back', 'CustomerController@back')->name('customer.back');
 Route::get('/product/index', 'ProductController@index')->name('product');
 Route::get('/product/create', 'ProductController@create')->name('product.create');
 Route::post('/product/save',  'ProductController@save')->name('product.save');
-Route::get('/product/edit/{id}', 'ProductController@edit')->name('product.edit');
-Route::post('/product/update/{id}',  'ProductController@update')->name('product.update');
+Route::get('/product/edit/{product}', 'ProductController@edit')->name('product.edit');
+Route::post('/product/update/{product}',  'ProductController@update')->name('product.update');
 Route::get('/product/search/{id}',  'ProductController@search')->name('product.search');
-
+Route::post('statuses', 'StatusesController@store')->name('statuses.store');
+Route::get('/product/customer',  'HomeController@indexejemplo')->name('product.customer');
+Route::get('/product/customer',  'HomeController@home')->name('product.customer');
+Route::get('cart', 'ProductController@cart')->name('product.cart');
+Route::get('/product/add-to-cart/{id}', 'ProductController@addToCart')->name('product.add-to-cart');
+Route::get('/product/back', 'productController@back')->name('product.back');
+Route::post('/cart/update', 'CartController@update')->name('cart.update');
 
 
 

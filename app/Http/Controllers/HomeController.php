@@ -33,20 +33,20 @@ class HomeController extends Controller
 
         } else {
             $products = DB::table('products')->where('status', true)->paginate(4);
-            return view('customer/homeCustomer', ['products' => $products]);
+            return view('customer/home_customer', ['products' => $products]);
         }
     }
 
     public function indexejemplo()
     {
         $products = DB::table('products')->where('status', true)->paginate(4);
-        return view('customer/homeCustomer', ['products' => $products]);
+        return view('customer/home_customer', ['products' => $products]);
     }
 
     public function home()
 {
     $products = DB::table('products')->where('status', true)->paginate(4);
-    return view('customer/homeCustomer', ['products' => $products]);
+    return view('customer/home_customer', ['products' => $products]);
 }
 
 

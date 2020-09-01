@@ -81,10 +81,10 @@
                             <div class="form-group row">
                                 <label for="status" class="col-md-4 col-form-label text-md-right"> Cambiar estado </label>
                                 <div class="col-md-6">
-                                <select class="form-control" id="status"  name="status">
-                                    <option value=1>Habilitar</option>
-                                    <option value=0>Desabilitar</option>
-                                </select>
+                                    <select class="form-control" id="status"  name="status">
+                                        <option value=1>Habilitar</option>
+                                        <option value=0>Desabilitar</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -99,7 +99,7 @@
                                     <a href="{{ route('product') }}" class="btn btn-primary "> Atras </a>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="submit" class=" btn btn-primary" value="Upload"/>
+                                    <input type="submit" class=" btn btn-primary" value="guardar"/>
                                 </div>
                             </div>
                         </form>

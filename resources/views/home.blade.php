@@ -15,7 +15,7 @@
             </div>
         </div>
             <div class="row">
-                @include('layouts.sideMenu')
+                @include('layouts.side_menu')
                 <div class="col-md-10">
                     <table class="table mt-5">
                         <thead>

@@ -33,7 +33,7 @@ Route::post('statuses', 'StatusesController@store')->name('statuses.store');
 
 Route::get('/product/customer',  'HomeController@indexejemplo')->name('product.customer');
 
-Route::get('/cart/guardarCarrito',  'CartController@guardarCarrito')->name('cart.guardarCarrito');
+Route::get('/cart/saveCart',  'CartController@saveCart')->name('saveCart');
 
 
 Route::get('/product/customer',  'HomeController@home')->name('product.customer');

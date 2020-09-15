@@ -72,7 +72,7 @@
                class="btn btn-danger "> vaciar carrito</a>
 
 
-            <a href="{{ URL::route('cart.guardarCarrito') }}" class="btn btn-primary">
+            <a href="{{ URL::route('saveCart') }}" class="btn btn-primary">
                 <i class=" fa-angle-left"></i>guardar carrito</a>
         </td>
 

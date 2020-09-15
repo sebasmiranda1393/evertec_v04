@@ -6,6 +6,7 @@ use App\Product;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laracasts\Flash\Flash;
 
 
 class CartController extends Controller
@@ -16,20 +17,19 @@ class CartController extends Controller
     }
 
 
-    public function guardarCarrito()
+    public function saveCart()
     {
         $cart = new Cart();
         $cart->user_id = Auth::user()->id;
         $cart->save();
 
-        foreach(session()->get('cart') as $key => $value){
+        foreach (session()->get('cart') as $key => $value) {
             $cartDetails = new CartProduct();
             $cartDetails->cart_id = $cart->id;
             $cartDetails->product_id = $value["id"];
             $cartDetails->quantity = $value["quantity"];
             $cartDetails->save();
         }
-
 
 
     }
@@ -46,7 +46,7 @@ class CartController extends Controller
         $cart = session()->get('cart');
 
 
-       if (!$cart) {
+        if (!$cart) {
 
             $cart = [
                 $id => [
@@ -61,17 +61,22 @@ class CartController extends Controller
 
             session()->put('cart', $cart);
 
+
+            toastr()->success('producto agregado');
+
             return redirect()->back()->with('success', "producto agregado!");
         }
 
-        // if cart not empty then check if this product exist then increment quantity
+
         if (isset($cart[$id])) {
 
             $cart[$id]['quantity']++;
 
             session()->put('cart', $cart);
 
-            return redirect()->back()->with('success', "producto agregado!");
+            toastr()->success('producto agregado');
+
+               return redirect()->back()->with('success', "producto agregado!");
 
         }
 
@@ -85,20 +90,18 @@ class CartController extends Controller
         ];
 
         session()->put('cart', $cart);
-
-
+        toastr()->success('producto agregado');
         return redirect()->back()->with('success', "producto agregado!");
 
     }
 
 
-
     public function delete($id)
-    {
-        $product = session::forget('cart', $id)->first();
-        $product->destroy($id);
-        return redirect()->back();
-    }
+      {
+          $product = session::forget('cart', $id)->first();
+          $product->destroy($id);
+          return redirect()->back();
+      }
 
     public function update(Product $product, Request $request)
     {

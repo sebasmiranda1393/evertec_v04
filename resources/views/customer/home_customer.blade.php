@@ -46,16 +46,18 @@
                                 <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
                         @endif
 
-                        <a class="add-to-cart"  href="{{ route('cart.add-to-cart', $product->id) }}">Añadir al carro </a>
+                        <a class="add-to-cart"
+                           href="{{ route('cart.add-to-cart', $product->id) }}"
+                        >Añadir al carro </a>
 
                     </div>
                     <div class="product-content">
-                       <h3 class="title"><a href="#">{{ $product->name}} </a></h3>
-                    <span class="price">${{ $product->sale_price}}</span>
+                        <h3 class="title"><a href="#">{{ $product->name}} </a></h3>
+                        <span class="price">${{ $product->sale_price}}</span>
+                    </div>
                 </div>
             </div>
-    </div>
-    @endforeach
+        @endforeach
     </div>
     <div class="row list-group-horizontal pt-4">
         <div class="col-md-4 offset-5 ">
@@ -63,4 +65,7 @@
         </div>
     </div>
     <hr>
+    @jquery
+    @toastr_js
+    @toastr_render
 @endsection

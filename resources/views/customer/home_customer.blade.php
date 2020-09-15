@@ -52,7 +52,7 @@
 
                     </div>
                     <div class="product-content">
-                        <h3 class="title"><a href="#">{{ $product->name}} </a></h3>
+                        <h3 class="title"><a href="{{ route('product.description', $product->id) }}">{{ $product->name}} </a></h3>
                         <span class="price">${{ $product->sale_price}}</span>
                     </div>
                 </div>

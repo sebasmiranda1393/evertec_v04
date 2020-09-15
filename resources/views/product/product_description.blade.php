@@ -1,43 +1,64 @@
 @extends('layouts.app')
 @section('content')
+    <div class="rowlist-group-vertical pt-5">
+        <div class="row list-group-vertical pt-5">
+        <div class="col-md-4 offset-2">
+            <li class="nav-item nav-profile border-bottom ">
+                <a href="#" class="table table-hover table-condensed ">
+                    <tr>
+                        <div class="row">
+                            <div class="col-sm-6  col-md-6 nav-profile-image">
+                                <img src="{{ asset('image/face1.jpg') }}" alt="profile">
+                                <span class="text-secondary icon-sm text-center"> <FONT SIZE=6>
+                    {{ Auth::user()->name }}</span>
 
-    <form action="{{ route('product.search', 1) }}" method="GET" class="form-container">
-    {{ csrf_field() }}
+                            </div>
+                        </div>
+                    </tr>
+                </a>
+            </li>
+        </div>
+    </div>
 
-        <td>
-            <a href="{{ URL::route('cart.cart') }}" class="btn btn-primary">
-                <i class="fa fa-angle-left"></i>mis productos</a>
-        </td>
-    </form>
+        <div class="col-md-6 offset-4">
+            <H1> TU TIENDA CADA VEZ MAS CERCA! </H1>
+        </div>
+    </div>
 
-    <div class="row list-group-horizontal pt-5">
-        @foreach ($products as $product)
-            <div class="col-md-2 col-sm-2 offset-1">
-                <div class="product-grid2">
-                    <div class="product-image2">
-                        <a href="#">
-
-                            @if($product->productimg==null)
-                                <img src="{{ asset('image/imagen-no-disponible.png') }}">
-
-                            @else
-                                <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
-                        @endif
-                        <a class="add-to-cart" href="{{ route('cart.add-to-cart', $product->id) }}">Añadir al carro</a>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title"><a href="#">{{ $product->name}}</a></h3>
-                        <span class="price">${{ $product->description}}</span>
-                        <span class="price">${{ $product->sale_price}}</span>
+    <div class="row">
+        <div class="col-md-10 offset-2">
+            <div class="row">
+                <div class="col-md-4 offset-1">
+                    <form action="{{ route('product.search', 1) }}" method="GET" class="form-container">
+                        {{ csrf_field() }}
+                        <div class="row list-group-horizontal pt-5">
+                            <div class="col-md-6 col-sm-6 offset-1">
+                                <div class="product-grid2">
+                                    <div class="product-image2">
+                                        <a href="#">
+                                            <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
+                                        <a class="add-to-cart" href="{{ route('cart.add-to-cart', $product->id) }}"
+                                        >Añadir al carro</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 pt-5">
+                    <div class="row list-group-vertical pt-5">
+                        <div class="product-content">
+                            <h3 class="title">Nombre:<a href="#">{{ $product->name}}</a></h3>
+                            <h3 class="title">Nescripcion:<a href="#">{{ $product->description}}</a></h3>
+                            <span class="price">Valor: ${{ $product->sale_price}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
-    <div class="row list-group-horizontal pt-4">
-        <div class="col-md-4 offset-5 ">
-            {{ $products->render() }}
+            <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">
+                <i class="fa-angle-left"></i>ver mas productos</a>
+            <hr>
         </div>
     </div>
-    <hr>
+
 @endsection

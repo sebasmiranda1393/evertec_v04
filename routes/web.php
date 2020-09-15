@@ -58,5 +58,7 @@ Route::get('/cart/delete',  'CartController@delete')->name('cart.delete');
 
 Route::put('/cart/update',  'CartController@update')->name('cart.update');
 
+Route::get('/product/description/{id}',  'ProductController@description')->name('product.description');
+
 
 

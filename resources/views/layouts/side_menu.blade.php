@@ -1,8 +1,6 @@
 <div class="col-md-2">
     <nav class="navbar nav-tabs" id="sidebar">
-
         <ul class="navbar-nav nav">
-
             <li class="nav-item nav-profile border-bottom ">
                 <a href="#" class="nav-link flex-column">
                     <div class="row">

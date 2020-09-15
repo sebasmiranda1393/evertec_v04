@@ -140,10 +140,11 @@ class ProductController extends Controller
         }
     }
 
-    public function description()
+    public function description(int $id)
     {
-        $products = Product::all();
-        return view('product/product_description', ["products" => $products]);
+        $product = Product::find($id);
+        return view('product/product_description', ["product" => $product]);
+
     }
 
     public function back()

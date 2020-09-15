@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Product;
 use App\User;
@@ -37,17 +39,12 @@ class HomeController extends Controller
         }
     }
 
-    public function indexejemplo()
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function home()
     {
         $products = DB::table('products')->where('status', true)->paginate(4);
         return view('customer/home_customer', ['products' => $products]);
     }
-
-    public function home()
-{
-    $products = DB::table('products')->where('status', true)->paginate(4);
-    return view('customer/home_customer', ['products' => $products]);
-}
-
-
 }

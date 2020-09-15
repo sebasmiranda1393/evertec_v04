@@ -1,5 +1,5 @@
 .main-section {
-    background-color: #F8F8F8;
+    background-color: #ffed4a;
 }
 
 .dropdown {
@@ -22,7 +22,7 @@
 }
 
 .total-header-section {
-    border-bottom: 1px solid #d2d2d2;
+    border-bottom: 1px solid #ffed4a;
 }
 
 .total-section p {
@@ -41,7 +41,7 @@
 
 .cart-detail-product p {
     margin: 0px;
-    color: #000;
+    color: #ffed4a;
     font-weight: 500;
 }
 
@@ -52,11 +52,11 @@
 }
 
 .cart-detail .count {
-    color: #C2C2DC;
+    color: #ffed4a;
 }
 
 .checkout {
-    border-top: 1px solid #d2d2d2;
+    border-top: 1px solid #ffed4a;
     padding-top: 15px;
 }
 
@@ -71,7 +71,7 @@
     top: -20px;
     right: 50px;
     border: 10px solid transparent;
-    border-bottom-color: #fff;
+    border-bottom-color: #ffed4a;
 }
 
 .thumbnail {
@@ -130,8 +130,8 @@
     }
 
     table#cart tbody tr td:first-child {
-        background: #333;
-        color: #fff;
+        background: #ffed4a;
+        color: #ffed4a;
     }
 
     table#cart tbody td:before {
@@ -148,6 +148,14 @@
 
     table#cart tfoot td .btn {
         display: block;
+    }
+
+    table-cart
+    {
+        background: #ffed4a;
+        border-radius: 1em;
+        margin-bottom: 30px;
+        padding: 1em;
     }
 }
 

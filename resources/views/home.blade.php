@@ -46,7 +46,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('customer.edit', $user->id) }}"
+                                    <a href="{{ route('admin.edit', $user->id) }}"
                                        class="label label-warning">Editar</a>
                                 </td>
                             </tr>

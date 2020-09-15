@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{ route('cart.update') }}" method="POST" class="form-horizontal">
+    <form action="{{ route('cart.update') }}"  method="POST" class="form-horizontal">
         {{ csrf_field() }}
         <table id="cart" class="table table-hover table-condensed">
             <thead>
@@ -16,7 +16,6 @@
 
             <?php $total = 0 ?>
 
-
             @if(session('cart'))
                 @foreach(session('cart') as $id => $details)
 
@@ -29,31 +28,28 @@
                                         src="{{ asset('image/products/'.$details['photo'])}}"
                                         width="100" height="100" class="img-responsive"/>
                                 </div>
+
                                 <div class="col-sm-9">
                                     <h4 class="nomargin">{{ $details['name'] }}</h4>
                                 </div>
-
                             </div>
                         </td>
                         <td data-th="Price">${{ $details['price'] }}</td>
+
+
                         <td data-th="Quantity">
                             <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity"/>
                         </td>
+
                         <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
                         <td class="actions" data-th="">
 
                             <div class="row">
-                                <div class=" col-sm-3">
                                 </div>
                                 <div class="col-sm-3">
-                                    <a href="{{ URL::route('cart.update') }}" type="submit"
-                                       class="btn-primary"> guardar</a>
+                                    <a href="{{ URL::route('cart.delete') }}" type="submit"
+                                       class="btn btn-danger "> eliminar</a>
                                 </div>
-                                <div class="col-sm-3">
-                                    <a href="{{ URL::route('cart.update') }}" type="submit"
-                                       class=" btn-danger "> eliminar</a>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -70,6 +66,15 @@
 
         <td>
             <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">
-                <i class="fa fa-angle-left"></i>siga su compra</a>
+                <i class="fa-angle-left"></i>siga su compra</a>
+
+            <a href="{{ URL::route('product.customer') }}" type="submit"
+               class="btn btn-danger "> vaciar carrito</a>
+
+
+            <a href="{{ URL::route('cart.guardarCarrito') }}" class="btn btn-primary">
+                <i class=" fa-angle-left"></i>guardar carrito</a>
         </td>
+
+
 @endsection

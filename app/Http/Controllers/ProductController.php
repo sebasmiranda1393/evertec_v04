@@ -140,10 +140,10 @@ class ProductController extends Controller
         }
     }
 
-    public function description(Request $request, int $i)
+    public function description()
     {
         $products = Product::all();
-        return view('product/description_products', ["products" => $products]);
+        return view('product/product_description', ["products" => $products]);
     }
 
     public function back()
@@ -153,66 +153,5 @@ class ProductController extends Controller
 
 
 
-    public function cart()
-    {
-        return view('cart/cart');
-    }
-
-
-    public function addToCart($id)
-    {
-        $product = Product::find($id);
-
-        if (!$product) {
-
-            abort(404);
-
-        }
-        $cart = session()->get('cart');
-
-
-        if (!$cart) {
-
-            $cart = [
-                $id => [
-                    "name" => $product->name,
-                    "description" => $product->description,
-                    "quantity" => 1,
-                    "price" => $product->sale_price,
-                    "photo" => $product->productimg
-                ]
-            ];
-
-            session()->put('cart', $cart);
-
-            return redirect()->back()->with('success', 'Producto agregado!');
-        }
-
-        // if cart not empty then check if this product exist then increment quantity
-        if (isset($cart[$id])) {
-
-            $cart[$id]['quantity']++;
-
-            session()->put('cart', $cart);
-
-            return redirect()->back()->with('success', 'Producto agregado!');
-
-        }
-
-        // if item not exist in cart then add to cart with quantity = 1
-        $cart[$id] = [
-            "name" => $product->name,
-            "description" => $product->description,
-            "quantity" => 1,
-            "price" => $product->sale_price,
-            "photo" => $product->productimg
-        ];
-
-        session()->put('cart', $cart);
-
-
-        return redirect()->back()->with('success', 'Producto agregado!!');
-
-    }
 
 }

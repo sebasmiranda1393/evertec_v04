@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use DB;
-use phpDocumentor\Reflection\Types\Integer;
 
 class ProductController extends Controller
 {
@@ -18,7 +17,10 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('product', ["products" => $products]);
+        // var_dump(Product::with('categoria')->get());
+        return view('product/product', ['products' => Product::with('categoria')->get()]);
+        //  $products = Product->categoria();
+        //return view('product/product', ["products" => $products]);
     }
 
     /**
@@ -26,14 +28,14 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product/create_products');
+        return view('product/product_create');
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $product = new Product();
         $product->name = $request->input('name');
@@ -42,6 +44,7 @@ class ProductController extends Controller
         $product->sale_price = $request->input('price-buy');
         $product->available = $request->input('quantity');
         $product->category_id = 1;
+        var_dump($product);
 
         if ($request->hasfile('image')) {
             $file = $request->file('image');
@@ -54,6 +57,7 @@ class ProductController extends Controller
         }
         $product->save();
         return redirect()->route('product');
+
     }
 
 
@@ -99,7 +103,7 @@ class ProductController extends Controller
 
     {
         $product = Product::find($product->id);
-        return view('product/edit_product', ["product" => $product]);
+        return view('product/product_edit', ["product" => $product]);
     }
 
     /**
@@ -116,14 +120,19 @@ class ProductController extends Controller
             ->where('status', true)->paginate(4);
 
         if ($id == 0) {
-            return view('product', ["products" => $products]);
+            return view('product/product', ["products" => $products]);
 
         } else {
-            return view('customer/home_customer', ["products" => $products]);
+            return view('customer/customer_home', ["products" => $products]);
         }
     }
 
 
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function home(Request $request, int $id)
     {
         $namesearch = $request->get('namesearch');
@@ -140,6 +149,10 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function description(int $id)
     {
         $product = Product::find($id);
@@ -147,12 +160,20 @@ class ProductController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function back()
     {
         return redirect()->route('product');
     }
 
 
-
+    public function delete($id)
+    {
+        $product = session::forget('product', $id)->first();
+        $product->destroy($id);
+        return redirect()->back();
+    }
 
 }

@@ -6,7 +6,7 @@ use App\Product;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Session;
 
 
 class CartController extends Controller
@@ -30,8 +30,8 @@ class CartController extends Controller
             $cartDetails->quantity = $value["quantity"];
             $cartDetails->save();
         }
-
-
+        $this->emptyCar();
+        return redirect()->back();
     }
 
 
@@ -76,7 +76,7 @@ class CartController extends Controller
 
             toastr()->success('producto agregado');
 
-               return redirect()->back()->with('success', "producto agregado!");
+            return redirect()->back()->with('success', "producto agregado!");
 
         }
 
@@ -96,12 +96,53 @@ class CartController extends Controller
     }
 
 
-    public function delete($id)
-      {
-          $product = session::forget('cart', $id)->first();
-          $product->destroy($id);
-          return redirect()->back();
-      }
+    public function delete(int $idProduct)
+    {
+        $cart = session()->get('cart');
+        foreach ($cart as $key => $value) {
+            if ($idProduct == $value["id"]) {
+                Session::pull('cart.' . $key);
+                break;
+            }
+
+        }
+        return redirect()->back();
+    }
+
+
+    public function emptyCar()
+    {
+        Session::pull('cart');
+        return redirect()->back();
+    }
+
+    public function increaseProduct(int $idProduct)
+    {
+        $this->commonOperations($idProduct, 'sum');
+        return redirect()->back();
+    }
+
+    public function decreaseProduct(int $idProduct)
+    {
+        $this->commonOperations($idProduct, 'res');
+        return redirect()->back();
+
+    }
+
+    public function commonOperations(int $idProduct, string $operations)
+    {
+
+        $cart = session()->get('cart');
+        if ($operations == 'sum') {
+            $cart[$idProduct]['quantity']++;
+
+        } else {
+            $cart[$idProduct]['quantity']--;
+        }
+        session()->put('cart', $cart);
+
+    }
+
 
     public function update(Product $product, Request $request)
     {

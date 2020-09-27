@@ -15,7 +15,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form action="{{ route('admin.update', $user->id) }}" method="POST" class="form-horizontal">
+                        <form action="{{ route('customers.update', $user->id) }}" method="POST" class="form-horizontal">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="name">Nombre</label>
@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label for="email">Correo electronico</label>
                                 <input type="email" class="form-control" id="email"  name="email"placeholder="ingresa email"
-                               value={{ $user->email}}>
+                                       value={{ $user->email}}>
                             </div>
 
 
@@ -43,7 +43,8 @@
                                 <div class=" col-sm-3">
                                 </div>
                                 <div class=" col-sm-4">
-                                    <a href="{{ URL::route('admin.back') }}" class="btn btn-primary btn-lg"> Atras </a>
+                                  <a  href="{{ route('customers.back') }}"
+                                       class="btn btn-primary btn-lg"> Atras </a>
                                 </div>
                                 <div class="col-sm-4">
                                     <input type="submit" class=" btn btn-primary btn-lg" value="guardar" />

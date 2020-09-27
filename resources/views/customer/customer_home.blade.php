@@ -20,13 +20,13 @@
 
 
             <div class="col-sm-1">
-                <input type="submit" class=" btn btn-primary " value="Buscar"/>
+                <input  type="submit" class=" btn btn-primary " value="Buscar" />
             </div>
-
 
             <div class="col-sm-">
                 <a type="submit" class=" btn btn-primary "
-                   href="{{ URL::route('cart.cart') }}">mis Productos</a>
+                   href="{{ URL::route('cart.cart') }}">
+                    <i class="fas fa-shopping-cart"> </i> </a>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
 
                         <a class="add-to-cart"
                            href="{{ route('cart.add-to-cart', $product->id) }}"
-                        >Añadir al carro </a>
+                        >Me lo llevo! </a>
 
                     </div>
                     <div class="product-content">

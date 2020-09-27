@@ -39,6 +39,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">Descripcion</th>
                         <th scope="col">Valor Venta</th>
                         <th scope="col">Valor Compra</th>
@@ -52,6 +53,7 @@
                         <tr>
                             <th scope="row">{{ $product->id}}</th>
                             <td>{{ $product->name}}</td>
+                            <td>{{ $product->category_id}}</td>
                             <td>{{ $product->description}}</td>
                             <td>{{ $product->sale_price}}</td>
                             <td>{{ $product->purchase_price}}</td>

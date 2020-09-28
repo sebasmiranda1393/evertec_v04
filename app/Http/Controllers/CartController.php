@@ -137,7 +137,11 @@ class CartController extends Controller
             $cart[$idProduct]['quantity']++;
 
         } else {
-            $cart[$idProduct]['quantity']--;
+            if ($cart[$idProduct]['quantity']==1){
+
+            }else {
+                $cart[$idProduct]['quantity']--;
+            }
         }
         session()->put('cart', $cart);
 

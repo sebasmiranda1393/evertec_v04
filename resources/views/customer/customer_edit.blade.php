@@ -4,6 +4,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <body style="background-color:#B5D4C8;">
+
+                    </body>
                     <div class="card-header">Editar cliente</div>
 
                     <div class="card-body">
@@ -12,17 +15,18 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form action="{{ route('customer.update', $user->id) }}" method="POST" class="form-horizontal">
+                        <form action="{{ route('customers.update', $user->id) }}" method="POST" class="form-horizontal">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="name">Nombre</label>
-                                <input type="text" class="form-control" id="name"  name="name" placeholder="ingrese nombre"
-                                value={{ $user->name}}>
+                                <textarea required id="name" name="name"  cols="30" rows="1"
+                                          class="form-control" >{{ $user->name}} </textarea>
+
                             </div>
                             <div class="form-group">
                                 <label for="email">Correo electronico</label>
                                 <input type="email" class="form-control" id="email"  name="email"placeholder="ingresa email"
-                               value={{ $user->email}}>
+                                       value={{ $user->email}}>
                             </div>
 
 
@@ -39,7 +43,8 @@
                                 <div class=" col-sm-3">
                                 </div>
                                 <div class=" col-sm-4">
-                                    <a href="{{ URL::route('customer.back') }}" class="btn btn-primary btn-lg"> Atras </a>
+                                  <a  href="{{ route('customers.back') }}"
+                                       class="btn btn-primary btn-lg"> Atras </a>
                                 </div>
                                 <div class="col-sm-4">
                                     <input type="submit" class=" btn btn-primary btn-lg" value="guardar" />

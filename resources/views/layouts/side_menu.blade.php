@@ -28,6 +28,12 @@
                     <span class="menu-title">Productos</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('admin.home') }}">
+                    <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <span class="menu-title">catalogo</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>

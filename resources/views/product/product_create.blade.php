@@ -5,28 +5,42 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <body style="background-color:#AED6F1;">
+
+                    </body>
                     <div class="card-header">Cree un nuevo producto</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('product.save') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre producto</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name')
-                                        is-invalid @enderror" name="name" value=""
-                                           required autocomplete="name" autofocus>
-
+                                    <input id="name" type="text" class="form-control
+                                        @error('name')
+                                        is-invalid
+                                        @enderror" name="name" value="" required autocomplete="name" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="description" class="col-md-4 col-form-label text-md-right">Descripcion</label>
+                                <label for="status" class="col-md-4 col-form-label text-md-right"> Cambiar estado </label>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="status"  name="status">
+                                        <option value=1>Fruta</option>
+                                        <option value=2>Bebida</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="description"
+                                       class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
                                 <div class="col-md-6">
                                     <textarea required id="description" name="description" cols="30" rows="5"
-                                              class="form-control" > </textarea>
+                                              class="form-control"> </textarea>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -41,7 +55,8 @@
 
                                 <div class="col-md-6">
                                     <input id="price_sell" type="number"
-                                           class="form-control @error('password') is-invalid @enderror" name="price_sell"
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           name="price_sell"
                                            required autocomplete="new-password">
 
                                     @error('password')
@@ -73,7 +88,9 @@
                             </div>
                             <div class="form-group row ">
                                 <div class="col-md-6 offset-4 mt-3 custom-file">
-                                    <input id="image" type="file" name="image" />
+                                    <tr>
+                                        <input id="image" type="file" name="image"/>
+                                    </tr>
                                 </div>
                             </div>
 
@@ -82,7 +99,7 @@
                                     <a href="{{ route('product') }}" class="btn btn-primary "> Atras </a>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="submit" class=" btn btn-primary" value="Upload"/>
+                                    <input type="submit" class=" btn btn-primary" value="Guardar"/>
                                 </div>
                             </div>
                         </form>

@@ -1,6 +1,7 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-use App\Product;
+namespace App\Http\Controllers;
+
 use App\User;
 use DB;
 use Illuminate\Http\Request;
@@ -27,12 +28,22 @@ class HomeController extends Controller
     {
         $value = $request->user()->authorizeRoles(['user', 'admin']);
         $users = User::all();
+
         if ($value) {
-            return view('home', ["users" => $users]);
+            return view('admin/home', ["users" => $users]);
+
         } else {
-            $products =  DB::table('products')->where('status', true)->paginate(4);
-            return view('customer/homeCustomer', ['products' => $products]);
+            $products = DB::table('products')->where('status', true)->paginate(4);
+            return view('customer/customer_home', ['products' => $products]);
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function home()
+    {
+        $products = DB::table('products')->where('status', true)->paginate(4);
+        return view('customer/customer_home', ['products' => $products]);
+    }
 }

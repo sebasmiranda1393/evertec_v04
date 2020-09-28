@@ -43,6 +43,7 @@ Route::group(['prefix' => 'carts'], function(){
     Route::get('delete/{id}',  'CartController@delete')->name('cart.delete');
     Route::get('increaseProduct/{id}',  'CartController@increaseProduct')->name('cart.increaseProduct');
     Route::get('decreaseProduct/{id}',  'CartController@decreaseProduct')->name('cart.decreaseProduct');
+    Route::get('listCarts',  'CartController@listCarts')->name('list.carts');
     Route::get('emptyCar',  'CartController@emptyCar')->name('cart.emptyCar');
     Route::get('saveCart',  'CartController@saveCart')->name('saveCart');
     Route::get('carts', 'CartController@cart')->name('cart.cart');

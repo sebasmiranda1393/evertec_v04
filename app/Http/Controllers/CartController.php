@@ -148,6 +148,21 @@ class CartController extends Controller
     }
 
 
+    public function listCarts()
+    {
+        $data = Cart::select('carts.id', 'carts.created_at', 'products.name','products.productimg','products.sale_price', 'cart_products.quantity')
+            ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->join('products', 'products.id', '=', 'cart_products.product_id')
+            ->where('carts.id', 5)
+            ->get();
+
+        return view('cart/list_carts', ["carts" => $data]);
+
+    }
+
+
+
     public function update(Product $product, Request $request)
     {
         $this->validate($request, [

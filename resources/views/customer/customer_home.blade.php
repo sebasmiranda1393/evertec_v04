@@ -23,10 +23,16 @@
                 <input  type="submit" class=" btn btn-primary " value="Buscar" />
             </div>
 
-            <div class="col-sm-">
+            <div class="col-sm-1">
                 <a type="submit" class=" btn btn-primary "
                    href="{{ URL::route('cart.cart') }}">
                     <i class="fas fa-shopping-cart"> </i> </a>
+            </div>
+
+            <div class="col-sm-">
+                <a type="submit" class=" btn btn-primary "
+                   href="{{ URL::route('list.carts') }}">
+                    <i class="fas fa-dragon"></i> </a>
             </div>
         </div>
 

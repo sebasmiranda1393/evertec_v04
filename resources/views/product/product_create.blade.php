@@ -11,7 +11,7 @@
                     <div class="card-header">Cree un nuevo producto</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('product.save') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre producto</label>
@@ -21,6 +21,16 @@
                                         @error('name')
                                         is-invalid
                                         @enderror" name="name" value="" required autocomplete="name" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="status" class="col-md-4 col-form-label text-md-right"> Cambiar estado </label>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="status"  name="status">
+                                        <option value=1>Fruta</option>
+                                        <option value=2>Bebida</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -89,7 +99,7 @@
                                     <a href="{{ route('product') }}" class="btn btn-primary "> Atras </a>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="submit" class=" btn btn-primary" value="Upload"/>
+                                    <input type="submit" class=" btn btn-primary" value="Guardar"/>
                                 </div>
                             </div>
                         </form>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{ route('cart.update') }}"  method="POST" class="form-horizontal">
+    <form action="{{ route('cart.update') }}" method="POST" class="form-horizontal">
         {{ csrf_field() }}
         <table id="cart" class="table table-hover table-condensed">
             <thead>
@@ -38,19 +38,35 @@
 
 
                         <td data-th="Quantity">
-                            <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity"/>
+                            {{ $details['quantity'] }}
                         </td>
 
                         <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
-                        <td class="actions" data-th="">
+                        <div class="row">
+                            <td class="actions" data-th="">
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <a href="{{ URL::route('cart.delete',$details['id'])  }}" type="submit"
+                                               class="btn btn-danger "> eliminar</a>
+                                        </div>
 
-                            <div class="row">
+                                        <div class="col-md-3">
+
+                                            <a href="{{ URL::route('cart.increaseProduct',$details['id'])  }}" type="submit"
+                                               class="btn btn-danger "> +</a>
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <a href="{{ URL::route('cart.decreaseProduct',$details['id'])  }}" type="submit"
+                                               class="btn btn-danger "> -</a>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="col-sm-3">
-                                    <a href="{{ URL::route('cart.delete') }}" type="submit"
-                                       class="btn btn-danger "> eliminar</a>
-                                </div>
-                        </td>
+                            </td>
+                        </div>
                     </tr>
                 @endforeach
             @endif
@@ -66,14 +82,16 @@
 
         <td>
             <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">
-                <i class="fa-angle-left"></i>siga su compra</a>
+                continue comprando</a>
 
-            <a href="{{ URL::route('product.customer') }}" type="submit"
-               class="btn btn-danger "> vaciar carrito</a>
+            @csrf
+            @method('DELETE')
 
+            <a href="{{ URL::route('cart.emptyCar') }}" class="btn btn-primary">
+                vaciar carrito</a>
 
             <a href="{{ URL::route('saveCart') }}" class="btn btn-primary">
-                <i class=" fa-angle-left"></i>guardar carrito</a>
+                guardar carrito</a>
         </td>
 
 

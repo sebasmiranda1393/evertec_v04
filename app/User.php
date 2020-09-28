@@ -46,38 +46,33 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Show the application dashboard.
      * @author sebastian miranda
-     * @param Array of string $roles
-     * @return A Boolean
+     * @param array $roles description
+     * @return bool
      */
-    public function  authorizeRoles($roles)
+    public function  authorizeRoles($roles): bool
     {
-        if ($this->hasAnyRole($roles))
-        {
-            return true;
-        }
-        return false;
+      return $this->hasAnyRole($roles);
 
     }
 
     /**
      * Show the application dashboard.
      * @author sebastian miranda
-     * @param Array of string $roles
-     * @return A Boolean
+     * @param array/string $roles
+     * @return bool
      */
     public function hasAnyRole($roles)
     {
-        if (is_array($roles))
-        {
-            foreach ($roles as $role)
-            {
-                if ($this->hasRole($role))
-                {
-                    return true;
-                }
+        if (is_array($roles)) {
+
+            $hasRoles = collect($roles)->filter(function ($item){
+                return $this->hasRole($item);
+            })->count();
+
+            if ($hasRoles){
+            return true;
             }
-        } else
-        {
+        } else {
             if ($this->hasRole($roles))
             {
                 return true;
@@ -88,15 +83,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Show the application dashboard.
-     * @author sebastian miranda
-     * @param String $role
+     * @param string $role
      * @return Boolean
+     * @author sebastian miranda
      */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         if ($this->roles()->where('name', $role)->first())
         {
-            if($role=="admin")
+            if($role=='admin')
             {
                 return true;
             }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use App\User;
 use DB;
 use Illuminate\Http\Request;
@@ -31,11 +30,11 @@ class HomeController extends Controller
         $users = User::all();
 
         if ($value) {
-            return view('home', ["users" => $users]);
+            return view('admin/home', ["users" => $users]);
 
         } else {
             $products = DB::table('products')->where('status', true)->paginate(4);
-            return view('customer/home_customer', ['products' => $products]);
+            return view('customer/customer_home', ['products' => $products]);
         }
     }
 
@@ -45,6 +44,6 @@ class HomeController extends Controller
     public function home()
     {
         $products = DB::table('products')->where('status', true)->paginate(4);
-        return view('customer/home_customer', ['products' => $products]);
+        return view('customer/customer_home', ['products' => $products]);
     }
 }

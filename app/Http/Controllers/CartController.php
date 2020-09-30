@@ -45,7 +45,6 @@ class CartController extends Controller
         }
         $cart = session()->get('cart');
 
-
         if (!$cart) {
 
             $cart = [
@@ -61,10 +60,9 @@ class CartController extends Controller
 
             session()->put('cart', $cart);
 
-
             toastr()->success('producto agregado');
 
-            return redirect()->back()->with('success', "producto agregado!");
+            return redirect()->back()->with('success');
         }
 
 
@@ -76,7 +74,7 @@ class CartController extends Controller
 
             toastr()->success('producto agregado');
 
-            return redirect()->back()->with('success', "producto agregado!");
+            return redirect()->back()->with('success');
 
         }
 
@@ -91,7 +89,7 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
         toastr()->success('producto agregado');
-        return redirect()->back()->with('success', "producto agregado!");
+        return redirect()->back()->with('success');
 
     }
 
@@ -106,7 +104,9 @@ class CartController extends Controller
             }
 
         }
-        return redirect()->back();
+
+        toastr()->success('producto eliminado');
+        return redirect()->back()->with('success');;
     }
 
 
@@ -137,13 +137,43 @@ class CartController extends Controller
             $cart[$idProduct]['quantity']++;
 
         } else {
-            if ($cart[$idProduct]['quantity']==1){
+            if ($cart[$idProduct]['quantity'] == 1) {
 
-            }else {
+            } else {
                 $cart[$idProduct]['quantity']--;
             }
         }
         session()->put('cart', $cart);
+
+    }
+
+
+    public function listCarts()
+    {
+        $data = Cart::select('carts.id', 'carts.created_at', DB::raw('sum(products.sale_price) as total'))
+            ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->join('products', 'products.id', '=', 'cart_products.product_id')
+            ->where('carts.user_id', Auth::user()->id)
+            ->groupBy('carts.id')
+            ->get();
+
+        return view('cart/list_carts', ["carts" => $data]);
+
+    }
+
+    public function myCarts(int $idCart)
+    {
+        $data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
+            'products.sale_price', 'cart_products.quantity')
+            ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->join('products', 'products.id', '=', 'cart_products.product_id')
+            ->where('carts.user_id', Auth::user()->id)
+            ->where('carts.id', $idCart)
+            ->get();
+
+        return view('cart/my_carts', ['carts' => $data]);
 
     }
 

@@ -169,6 +169,10 @@ class ProductController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete($id)
     {
         $product = session::forget('product', $id)->first();

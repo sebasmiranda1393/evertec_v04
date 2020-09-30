@@ -24,9 +24,15 @@
                     <tr>
                         <td data-th="Product">
                             <div class="row">
-                                <div class="col-sm-3 hidden-xs"><img
-                                        src="{{ asset('image/products/'.$details['photo'])}}"
-                                        width="100" height="100" class="img-responsive"/>
+                                <div class="col-sm-3 hidden-xs">
+                                    @if($details['photo']==null)
+                                        <img src="{{ asset('image/imagen-no-disponible.png') }}"
+                                             width="100" height="100" class="img-responsive"/>
+                                    @else
+                                        <img
+                                            src="{{ asset('image/products/'.$details['photo'])}}"
+                                            width="100" height="100" class="img-responsive"/>
+                                    @endif
                                 </div>
 
                                 <div class="col-sm-9">
@@ -42,6 +48,7 @@
                         </td>
 
                         <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
+
                         <div class="row">
                             <td class="actions" data-th="">
                                 <div class="col-md-8">

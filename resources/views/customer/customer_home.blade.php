@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-
     <form action="{{ route('product.search', 1) }}" method="GET" class="form-container">
         {{ csrf_field() }}
+
         <div class="row p-3 pb-4">
             <div class="col-md-3 offset-1">
                 <div class="input-group mb-3">
@@ -23,11 +23,17 @@
                 <input  type="submit" class=" btn btn-primary " value="Buscar" />
             </div>
 
-            <div class="col-sm-">
+            <div class="col-sm-1">
                 <a type="submit" class=" btn btn-primary "
                    href="{{ URL::route('cart.cart') }}">
                     <i class="fas fa-shopping-cart"> </i> </a>
             </div>
+
+            <div class="col-md-2">
+                <a class=" btn " href="{{ URL::route('list.carts') }}">
+                    <i class="fas fa-cart-arrow-down"> mi historial de compras</i> </a>
+            </div>
+
         </div>
 
 
@@ -58,12 +64,14 @@
                 </div>
             </div>
         @endforeach
-    </div>
-    <div class="row list-group-horizontal pt-4">
-        <div class="col-md-4 offset-5 ">
+
+
+
+
+         <div class="col-md-2 offset-5 ">
             {{ $products->render() }}
         </div>
-    </div>
+
     <hr>
     @jquery
     @toastr_js

@@ -5,40 +5,36 @@
         <table id="cart" class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width:45%" class="text-center">Producto</th>
-                <th style="width:10%">Precio</th>
-                <th style="width:7%">cantidad</th>
-                <th style="width:12%" class="text-center">Subtotal</th>
-                <th style="width:28%"></th>
+                <th style="width:25%" class="text-center">mis compras</th>
+                <th style="width:25%" class="text-center">fecha de la compra</th>
+                <th style="width:25%" class="text-center">valor de mi compra</th>
+                <th style="width:25%" class="text-center">valor de mi compra</th>
+
+
             </tr>
             </thead>
             <tbody>
 
             <?php $total = 0 ?>
 
-                @foreach($carts as $id => $details)
+            @foreach($carts as $id => $details)
 
 
-                    <tr>
-                        <td > <div class="col-sm-3 hidden-xs"><img
-                                src="{{ asset('image/products/'.$details['productimg'] )}}"
-                                width="100" height="100" class="img-responsive"/>
-                        </div></td>
+                <tr>
+                    <td class="text-center" data-th="id">mi compra Nª{{ $details['id'] }}</td>
+                    <td class="text-center" data-th="Created_at">{{ $details['created_at'] }}</td>
+                    <td class="text-center"><strong>Total ${{ $details['total']}}</strong></td>
+                    <td class="text-center">
+                        <a href="{{ URL::route('myCarts.carts', $details->id) }}">
+                         <i class="fas fa-eye"></i></a>
+                    </td>
 
-                        <td data-th="Price">{{ $details['id'] }}</td>
-                        <td data-th="Price">{{ $details['name'] }}</td>
-                        <td data-th="Price">${{ $details['sale_price'] }}</td>
-                        <td data-th="Price">{{ $details['quantity'] }}</td>
-                        <td data-th="Price">{{ $details['created_at'] }}</td>
-
-
-                    </tr>
-                @endforeach
+                </tr>
+            @endforeach
 
             </tbody>
         </table>
-
-
-
-
+        <div class="col-sm-12">
+        <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">inicio </a>
+        </div>
 @endsection

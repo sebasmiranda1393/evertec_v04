@@ -24,14 +24,14 @@
             </div>
 
             <div class="col-sm-1">
-                <a type="submit" class=" btn btn-primary "
+                <a
                    href="{{ URL::route('cart.cart') }}">
-                    <i class="fas fa-shopping-cart"> </i> </a>
+                    <i class="fas fa-shopping-cart fa-3x"> </i> </a>
             </div>
 
             <div class="col-md-2">
-                <a class=" btn " href="{{ URL::route('list.carts') }}">
-                    <i class="fas fa-cart-arrow-down"> mi historial de compras</i> </a>
+                <a href="{{ URL::route('list.carts') }}">
+                    <i class="fas fa-cart-arrow-down "> mi historial de compras</i> </a>
             </div>
 
         </div>

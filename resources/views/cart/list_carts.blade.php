@@ -5,10 +5,10 @@
         <table id="cart" class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width:25%" class="text-center">mis compras</th>
-                <th style="width:25%" class="text-center">fecha de la compra</th>
-                <th style="width:25%" class="text-center">valor de mi compra</th>
-                <th style="width:25%" class="text-center">valor de mi compra</th>
+                <th style="width:25%" class="text-center" bgcolor="#00bfff">mis compras</th>
+                <th style="width:25%" class="text-center" bgcolor="#00bfff">fecha de la compra</th>
+                <th style="width:25%" class="text-center" bgcolor="#00bfff">valor de mi compra</th>
+                <th style="width:25%" class="text-center" bgcolor="#00bfff">ver mi compra</th>
 
 
             </tr>
@@ -26,7 +26,7 @@
                     <td class="text-center"><strong>Total ${{ $details['total']}}</strong></td>
                     <td class="text-center">
                         <a href="{{ URL::route('myCarts.carts', $details->id) }}">
-                         <i class="fas fa-eye"></i></a>
+                         <i class="fas fa-eye  fa-3x"></i></a>
                     </td>
 
                 </tr>

@@ -1,11 +1,18 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
+
+use App\Amount;
+use App\AuthRequest;
 use App\Cart;
 use App\CartProduct;
+use App\PaymentRequest;
 use App\Product;
+use App\RedirectRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Session;
 
 
@@ -17,24 +24,59 @@ class CartController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function saveCart()
     {
         $cart = new Cart();
         $cart->user_id = Auth::user()->id;
         $cart->save();
-
+        $amount = 0;
         foreach (session()->get('cart') as $key => $value) {
+            $amount += $value['price'] * $value['quantity'];
             $cartDetails = new CartProduct();
             $cartDetails->cart_id = $cart->id;
             $cartDetails->product_id = $value["id"];
             $cartDetails->quantity = $value["quantity"];
             $cartDetails->save();
         }
+        $this->loadRedirectRequest($amount);
         $this->emptyCar();
-        return redirect()->back();
+        // return redirect()->back();
     }
 
 
+    public function loadRedirectRequest($amount)    {
+        //$amountRequest = new Amount('COP',$amount);
+        $auth = new AuthRequest();
+        $auth->login = '6dd490faf9cb87a9862245da41170ff2';
+        $auth->tranKey = 'jsHJzM3+XG754wXh+aBvi70D9/4=';
+        $auth->nonce = 'TTJSa05UVmtNR000TlRrM1pqQTRNV1EREprWkRVMU9EZz0=';
+        $auth->seed =  date('Y-m-d H:i:s',time() );
+        $amountRequest = new Amount();
+        $amountRequest->currency = 'COP';
+        $amountRequest->total = $amount;
+        $paymentRequest = new PaymentRequest();
+        $paymentRequest->reference = '5976030f5575d';
+        $paymentRequest->description = 'Pago básico de prueba';
+        $paymentRequest->amount = $amountRequest;
+        $redirectRequest = new RedirectRequest();
+        $redirectRequest->auth = $auth;
+        $redirectRequest->payment = $paymentRequest;
+        $redirectRequest->expiration =  date('Y-m-d H:i:s',time());
+        $redirectRequest->returnUrl = 'https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d';
+        $redirectRequest->ipAddress = '27.0.0.1';
+        $redirectRequest->userAgent = 'PlacetoPay Sandbox';
+        echo($redirectRequest);
+
+
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addToCart($id)
     {
         $product = Product::find($id);
@@ -94,6 +136,10 @@ class CartController extends Controller
     }
 
 
+    /**
+     * @param int $idProduct
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(int $idProduct)
     {
         $cart = session()->get('cart');
@@ -110,18 +156,29 @@ class CartController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function emptyCar()
     {
         Session::pull('cart');
         return redirect()->back();
     }
 
+    /**
+     * @param int $idProduct
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function increaseProduct(int $idProduct)
     {
         $this->commonOperations($idProduct, 'sum');
         return redirect()->back();
     }
 
+    /**
+     * @param int $idProduct
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function decreaseProduct(int $idProduct)
     {
         $this->commonOperations($idProduct, 'res');
@@ -129,6 +186,10 @@ class CartController extends Controller
 
     }
 
+    /**
+     * @param int $idProduct
+     * @param string $operations
+     */
     public function commonOperations(int $idProduct, string $operations)
     {
 
@@ -148,6 +209,9 @@ class CartController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function listCarts()
     {
         $data = Cart::select('carts.id', 'carts.created_at', DB::raw('sum(products.sale_price) as total'))
@@ -162,6 +226,10 @@ class CartController extends Controller
 
     }
 
+    /**
+     * @param int $idCart
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myCarts(int $idCart)
     {
         $data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
@@ -178,6 +246,12 @@ class CartController extends Controller
     }
 
 
+    /**
+     * @param Product $product
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(Product $product, Request $request)
     {
         $this->validate($request, [

@@ -5,11 +5,11 @@
         <table id="cart" class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width:45%" class="text-center">Producto</th>
-                <th style="width:10%">Precio</th>
-                <th style="width:7%">cantidad</th>
-                <th style="width:12%" class="text-center">Subtotal</th>
-                <th style="width:28%"></th>
+                <th style="width:45%" class="text-center" bgcolor="#00bfff">Producto</th>
+                <th style="width:10%" bgcolor="#00bfff">Precio </th>
+                <th style="width:7%" bgcolor="#00bfff">cantidad</th>
+                <th style="width:12%" class="text-center" bgcolor="#00bfff">Subtotal</th>
+                <th style="width:28%" bgcolor="#00bfff"></th>
             </tr>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@
                                         <div class="col-md-3">
 
                                             <a href="{{ URL::route('cart.increaseProduct',$details['id'])  }}" type="submit"
-                                               class="btn btn-danger "> +</a>
+                                               class="btn btn-danger"> +</a>
                                         </div>
 
                                         <div class="col-md-3">

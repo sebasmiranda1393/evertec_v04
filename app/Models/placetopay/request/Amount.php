@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\placetopay\request;
 
 use Illuminate\Database\Eloquent\Model;
 

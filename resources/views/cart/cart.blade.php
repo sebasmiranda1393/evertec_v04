@@ -54,7 +54,7 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <a href="{{ URL::route('cart.delete',$details['id'])  }}" type="submit"
+                                            <a href="{{ route('cart.delete',$details['id'])  }}" type="submit"
                                                class="btn btn-danger "> eliminar</a>
                                         </div>
 
@@ -88,7 +88,7 @@
 
 
         <td>
-            <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">
+            <a href="{{ URL::route('home.index') }}" class="btn btn-primary">
                 continue comprando</a>
 
             @csrf

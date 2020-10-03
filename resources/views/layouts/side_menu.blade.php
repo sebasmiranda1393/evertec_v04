@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product') }}">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product.index') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
                     <span class="menu-title">Productos</span>
                 </a>

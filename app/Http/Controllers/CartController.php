@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Amount;
+use App\Models\placetopay\request\Amount;
 use App\AuthRequest;
 use App\Cart;
 use App\CartProduct;
@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function cart()
     {
         return view('cart/cart');
@@ -50,10 +55,10 @@ class CartController extends Controller
     public function loadRedirectRequest($amount)    {
         //$amountRequest = new Amount('COP',$amount);
         $auth = new AuthRequest();
-        $auth->login = '6dd490faf9cb87a9862245da41170ff2';
+       /* $auth->login = '6dd490faf9cb87a9862245da41170ff2';
         $auth->tranKey = 'jsHJzM3+XG754wXh+aBvi70D9/4=';
         $auth->nonce = 'TTJSa05UVmtNR000TlRrM1pqQTRNV1EREprWkRVMU9EZz0=';
-        $auth->seed =  date('Y-m-d H:i:s',time() );
+        $auth->seed = date('c');*/
         $amountRequest = new Amount();
         $amountRequest->currency = 'COP';
         $amountRequest->total = $amount;
@@ -64,6 +69,7 @@ class CartController extends Controller
         $redirectRequest = new RedirectRequest();
         $redirectRequest->auth = $auth;
         $redirectRequest->payment = $paymentRequest;
+
         $redirectRequest->expiration =  date('Y-m-d H:i:s',time());
         $redirectRequest->returnUrl = 'https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d';
         $redirectRequest->ipAddress = '27.0.0.1';

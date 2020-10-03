@@ -24,7 +24,7 @@
         <div class="col-md-10 offset-2">
             <div class="row">
                 <div class="col-md-4 offset-1">
-                    <form action="{{ route('product.search', 1) }}" method="GET" class="form-container">
+                    <form action="{{ route('product.show', 1) }}" method="GET" class="form-container">
                         {{ csrf_field() }}
                         <div class="row list-group-horizontal pt-5">
                             <div class="col-md-6 col-sm-6 offset-1">

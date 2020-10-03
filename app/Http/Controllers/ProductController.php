@@ -2,29 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
+use App\Product;
 use DB;
 
 class ProductController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
 
-    public function index()
+    public function __construct()
     {
-        $products = Product::all();
-        // var_dump(Product::with('categoria')->get());
-        return view('product/product', ['products' => Product::with('categoria')->get()]);
-        //  $products = Product->categoria();
-        //return view('product/product', ["products" => $products]);
+        $this->middleware('auth');
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('product/product', ['products' => Product::with('categoria')->get()]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -32,8 +35,10 @@ class ProductController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -56,20 +61,57 @@ class ProductController extends Controller
 
         }
         $product->save();
-        return redirect()->route('product');
-
+        return redirect()->route('product.index');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, int $id)    {
+
+        $name_search = $request->get('namesearch');
+        $valor_search = $request->get('valorsearch');
+        $products = Product::select('products.id', 'products.name', 'products.sale_price',
+            'products.purchase_price','products.description' ,'categories.category', 'products.available' )
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->where('name', 'like', '%' . $name_search . '%')
+            ->where('sale_price', 'like', '%' . $valor_search . '%')
+            ->where('status', true)->paginate(4);
+        if ($id == 0) {
+            return view('product/product', ["products" => $products]);
+
+        } else  if ($id == 1){
+            return view('customer/customer_home', ["products" => $products]);
+        }
+    }
 
     /**
-     * @param Product $product
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Product $product, Request $request)
+    public function edit(int $id)
     {
+        $product = Product::find($id);
+        return view('product/product_edit', ["product" => $product]);
+    }
 
-        if ($request->hasfile('image')) {
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Product $product
+     * @return \Illuminate\Http\Response
+     */
+    public function update( Request  $request, Product $product)
+    {
+        var_dump("entro");
+       if ($request->hasfile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = $request->input('name') . time() . '.' . $extension;
@@ -90,43 +132,41 @@ class ProductController extends Controller
                 'status' => $request->get('status')
             )
         );
+        return redirect()->route('product.index');
+    }
+
+    /**
+     * Remove the specified resource from the session.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(int $id)
+    {
+        $product = session::forget('product', $id)->first();
+        $product->destroy($id);
+        return redirect()->back()->with('message', 'task deleted!');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function back()
+    {
+        var_dump("entro");
         return redirect()->route('product');
-
-    }
-
-
-    /**
-     * @param Product $product
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
-     */
-    public function edit(Product $product)
-
-    {
-        $product = Product::find($product->id);
-        return view('product/product_edit', ["product" => $product]);
     }
 
     /**
-     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function search(Request $request, int $id)
+    public function description(int $id)
     {
-        $namesearch = $request->get('namesearch');
-        $valorsearch = $request->get('valorsearch');
-        $products = DB::Table('products')->where('name', 'like', '%' . $namesearch . '%')
-            ->where('sale_price', 'like', '%' . $valorsearch . '%')
-            ->where('status', true)->paginate(4);
+        $product = Product::find($id);
+        return view('product/product_description', ["product" => $product]);
 
-        if ($id == 0) {
-            return view('product/product', ["products" => $products]);
-
-        } else {
-            return view('customer/customer_home', ["products" => $products]);
-        }
     }
-
 
     /**
      * @param Request $request
@@ -148,36 +188,4 @@ class ProductController extends Controller
             return view('product/welcome', ["products" => $products]);
         }
     }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function description(int $id)
-    {
-        $product = Product::find($id);
-        return view('product/product_description', ["product" => $product]);
-
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function back()
-    {
-        return redirect()->route('product');
-    }
-
-
-    /**
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function delete($id)
-    {
-        $product = session::forget('product', $id)->first();
-        $product->destroy($id);
-        return redirect()->back();
-    }
-
 }

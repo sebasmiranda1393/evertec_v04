@@ -96,7 +96,7 @@
 
                             <div class="form-group row mb-0 mt-5">
                                 <div class="col-sm-3 offset-4">
-                                    <a href="{{ route('product') }}" class="btn btn-primary "> Atras </a>
+                                    <a href="{{ route('product.index') }}" class="btn btn-primary "> Atras </a>
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="submit" class=" btn btn-primary" value="Guardar"/>

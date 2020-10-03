@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{ route('product.search', 1) }}" method="GET" class="form-container">
+    <form action="{{ route('product.show', 1) }}" method="GET" class="form-container">
         {{ csrf_field() }}
 
         <div class="row p-3 pb-4">
@@ -20,12 +20,12 @@
 
 
             <div class="col-sm-1">
-                <input  type="submit" class=" btn btn-primary " value="Buscar" />
+                <input type="submit" class=" btn btn-primary " value="Buscar"/>
             </div>
 
             <div class="col-sm-1">
                 <a
-                   href="{{ URL::route('cart.cart') }}">
+                    href="{{ URL::route('cart.cart') }}">
                     <i class="fas fa-shopping-cart fa-3x"> </i> </a>
             </div>
 
@@ -44,13 +44,13 @@
                 <div class="product-grid2">
                     <div class="product-image2">
                         <a href="#">
-
                             @if($product->productimg==null)
                                 <img src="{{ asset('image/imagen-no-disponible.png') }}">
 
                             @else
                                 <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
-                        @endif
+                             @endif
+
 
                         <a class="add-to-cart"
                            href="{{ route('cart.add-to-cart', $product->id) }}"
@@ -58,22 +58,24 @@
 
                     </div>
                     <div class="product-content">
-                        <h3 class="title"><a href="{{ route('product.description', $product->id) }}">{{ $product->name}} </a></h3>
+                        <h3 class="title"><a
+                                href="{{ route('product.description', $product->id) }}">{{ $product->name}} </a>
+                        </h3>
                         <span class="price">${{ $product->sale_price}}</span>
                     </div>
+
+
                 </div>
             </div>
         @endforeach
 
 
-
-
-         <div class="col-md-2 offset-5 ">
+        <div class="col-md-2 offset-5 ">
             {{ $products->render() }}
         </div>
 
-    <hr>
-    @jquery
-    @toastr_js
-    @toastr_render
+        <hr>
+        @jquery
+        @toastr_js
+        @toastr_render
 @endsection

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use DB;
 use Illuminate\Http\Request;
 
@@ -12,24 +11,6 @@ use Illuminate\Http\Request;
  */
 class AdminController extends Controller
 {
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        $value = $request->user()->authorizeRoles(['user', 'admin']);
-        $users = User::all();
-
-        if ($value) {
-            return view('home', ["users" => $users]);
-
-        } else {
-            $products = DB::table('products')->where('status', true)->paginate(4);
-            return view('admin/home_admin', ['products' => $products]);
-        }
-    }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View

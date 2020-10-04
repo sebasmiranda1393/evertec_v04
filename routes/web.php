@@ -29,7 +29,6 @@ Route::group(['prefix' => 'products'], function () {
 Route::group(['prefix' => 'admin'], function () {
     Route::get('home', 'AdminController@home')->name('admin.home')->middleware('roleAdmin');
     Route::get('search/{id}', 'AdminController@search')->name('admin.search')->middleware('roleAdmin');
-    Route::get('welcome', 'AdminController@welcome')->name('admin.welcome')->middleware('roleAdmin');
 });
 
 Route::group(['prefix' => 'carts'], function () {

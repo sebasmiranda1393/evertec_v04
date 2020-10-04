@@ -23,7 +23,7 @@
             </div>
 
             <div class=" col-sm-1">
-                <a href="{{ URL::route('home') }}" class="btn btn-primary "> Atras </a>
+                <a href="{{ URL::route('home.index') }}" class="btn btn-primary "> Atras </a>
             </div>
         </div>
     </form>

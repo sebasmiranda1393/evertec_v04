@@ -34,31 +34,37 @@ class CartController extends Controller
      */
     public function saveCart()
     {
-        $cart = new Cart();
-        $cart->user_id = Auth::user()->id;
-        $cart->save();
-        $amount = 0;
-        foreach (session()->get('cart') as $key => $value) {
-            $amount += $value['price'] * $value['quantity'];
-            $cartDetails = new CartProduct();
-            $cartDetails->cart_id = $cart->id;
-            $cartDetails->product_id = $value["id"];
-            $cartDetails->quantity = $value["quantity"];
-            $cartDetails->save();
+        if (session()->get('cart') != null) {
+            $cart = new Cart();
+            $cart->user_id = Auth::user()->id;
+            $cart->save();
+            $amount = 0;
+            foreach (session()->get('cart') as $key => $value) {
+                $amount += $value['price'] * $value['quantity'];
+                $cartDetails = new CartProduct();
+                $cartDetails->cart_id = $cart->id;
+                $cartDetails->product_id = $value["id"];
+                $cartDetails->quantity = $value["quantity"];
+                $cartDetails->save();
+            }
+            $this->loadRedirectRequest($amount);
+            $this->emptyCar();
+            // return redirect()->back();
+        } else {
+            return redirect()->back();
         }
-        $this->loadRedirectRequest($amount);
-        $this->emptyCar();
-        // return redirect()->back();
+
     }
 
 
-    public function loadRedirectRequest($amount)    {
+    public function loadRedirectRequest($amount)
+    {
         //$amountRequest = new Amount('COP',$amount);
         $auth = new AuthRequest();
-       /* $auth->login = '6dd490faf9cb87a9862245da41170ff2';
-        $auth->tranKey = 'jsHJzM3+XG754wXh+aBvi70D9/4=';
-        $auth->nonce = 'TTJSa05UVmtNR000TlRrM1pqQTRNV1EREprWkRVMU9EZz0=';
-        $auth->seed = date('c');*/
+        /* $auth->login = '6dd490faf9cb87a9862245da41170ff2';
+         $auth->tranKey = 'jsHJzM3+XG754wXh+aBvi70D9/4=';
+         $auth->nonce = 'TTJSa05UVmtNR000TlRrM1pqQTRNV1EREprWkRVMU9EZz0=';
+         $auth->seed = date('c');*/
         $amountRequest = new Amount();
         $amountRequest->currency = 'COP';
         $amountRequest->total = $amount;
@@ -70,7 +76,7 @@ class CartController extends Controller
         $redirectRequest->auth = $auth;
         $redirectRequest->payment = $paymentRequest;
 
-        $redirectRequest->expiration =  date('Y-m-d H:i:s',time());
+        $redirectRequest->expiration = date('Y-m-d H:i:s', time());
         $redirectRequest->returnUrl = 'https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d';
         $redirectRequest->ipAddress = '27.0.0.1';
         $redirectRequest->userAgent = 'PlacetoPay Sandbox';
@@ -94,53 +100,92 @@ class CartController extends Controller
         $cart = session()->get('cart');
 
         if (!$cart) {
+            if ($product->available > 0) {
+                $cart = [
+                    $id => [
+                        "id" => $product->id,
+                        "name" => $product->name,
+                        "description" => $product->description,
+                        "quantity" => 1,
+                        "price" => $product->sale_price,
+                        "photo" => $product->productimg
+                    ]
+                ];
 
-            $cart = [
-                $id => [
-                    "id" => $product->id,
-                    "name" => $product->name,
-                    "description" => $product->description,
-                    "quantity" => 1,
-                    "price" => $product->sale_price,
-                    "photo" => $product->productimg
-                ]
-            ];
-
-            session()->put('cart', $cart);
-
-            toastr()->success('producto agregado');
-
-            return redirect()->back()->with('success');
+                $this->updateQuantityProductByDecrement($id, $product->available);
+                session()->put('cart', $cart);
+                toastr()->success('producto agregado');
+                return redirect()->back()->with('success');
+            }else{
+                toastr()->success('producto no agregado');
+                return redirect()->back()->with('success');
+            }
         }
 
 
         if (isset($cart[$id])) {
 
-            $cart[$id]['quantity']++;
-
-            session()->put('cart', $cart);
-
-            toastr()->success('producto agregado');
-
-            return redirect()->back()->with('success');
-
+            if ($product->available > 0) {
+                $cart[$id]['quantity']++;
+                $this->updateQuantityProductByDecrement($id, $product->available);
+                session()->put('cart', $cart);
+                toastr()->success('producto agregado');
+                return redirect()->back()->with('success');
+            } else {
+                toastr()->success('producto no agregado');
+            }
         }
 
-        $cart[$id] = [
-            "id" => $product->id,
-            "name" => $product->name,
-            "description" => $product->description,
-            "quantity" => 1,
-            "price" => $product->sale_price,
-            "photo" => $product->productimg
-        ];
-
-        session()->put('cart', $cart);
-        toastr()->success('producto agregado');
+        if ($product->available > 0) {
+            $cart[$id] = [
+                "id" => $product->id,
+                "name" => $product->name,
+                "description" => $product->description,
+                "quantity" => 1,
+                "price" => $product->sale_price,
+                "photo" => $product->productimg
+            ];
+            session()->put('cart', $cart);
+            $this->updateQuantityProductByDecrement($id, $product->available);
+            toastr()->success('producto agregado');
+            return redirect()->back()->with('success');
+        } else {
+            toastr()->success('producto no agregado');
+        }
         return redirect()->back()->with('success');
-
     }
 
+
+    public function updateQuantityProductByDecrement(int $idProduct, int $quantity)
+    {
+        $quantity --;
+        DB::Table('products')->where('id', $idProduct)->update(
+            array(
+                'available' => $quantity
+            )
+        );
+    }
+
+    /*public function updateQuantityProductByDecrement(int $idProduct, int $quantity)
+    {
+        $quantity --;
+        DB::Table('products')->where('id', $idProduct)->update(
+            array(
+                'available' => $quantity
+            )
+        );
+    }*/
+
+
+    public function updateQuantityProductByIncrement(int $idProduct, int $quantity)
+    {
+        $quantity ++;
+        DB::Table('products')->where('id', $idProduct)->update(
+            array(
+                'available' => $quantity
+            )
+        );
+    }
 
     /**
      * @param int $idProduct
@@ -148,6 +193,9 @@ class CartController extends Controller
      */
     public function delete(int $idProduct)
     {
+        $product = Product::find($idProduct);
+        $cart[$idProduct]['quantity'];
+
         $cart = session()->get('cart');
         foreach ($cart as $key => $value) {
             if ($idProduct == $value["id"]) {
@@ -167,6 +215,7 @@ class CartController extends Controller
      */
     public function emptyCar()
     {
+
         Session::pull('cart');
         return redirect()->back();
     }
@@ -198,15 +247,20 @@ class CartController extends Controller
      */
     public function commonOperations(int $idProduct, string $operations)
     {
-
+        $product = Product::find($idProduct);
+        var_dump("entro");
         $cart = session()->get('cart');
         if ($operations == 'sum') {
-            $cart[$idProduct]['quantity']++;
-
+            if ($product->available ==0) {
+            } else {
+                $this->updateQuantityProductByDecrement($product->id, $product->available);
+                $cart[$idProduct]['quantity']++;
+            }
         } else {
             if ($cart[$idProduct]['quantity'] == 1) {
 
             } else {
+                $this->updateQuantityProductByIncrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']--;
             }
         }

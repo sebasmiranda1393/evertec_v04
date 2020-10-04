@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="nav-item pt-3">
-                <a class="nav-link {{ Request::is('home') ? 'btn-info' : '' }}" href="{{ route('home') }}">
+                <a class="nav-link {{ Request::is('home') ? 'btn-info' : '' }}" href="{{ route('home.index') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
                     <span class="menu-title">Clientes</span>
                 </a>

@@ -21,14 +21,6 @@ class AdminController extends Controller
         return view('admin/home_admin', ['products' => $products]);
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function welcome()
-    {
-        $products = DB::table('products')->where('status', true)->paginate(4);
-        return view('admin/home_admin', ['products' => $products]);
-    }
 
     public function search(Request $request, int $id)
     {

@@ -116,8 +116,8 @@ class CartController extends Controller
                 session()->put('cart', $cart);
                 toastr()->success('producto agregado');
                 return redirect()->back()->with('success');
-            }else{
-                toastr()->success('producto no agregado');
+            } else {
+                toastr()->warning('producto no agregado');
                 return redirect()->back()->with('success');
             }
         }
@@ -132,7 +132,7 @@ class CartController extends Controller
                 toastr()->success('producto agregado');
                 return redirect()->back()->with('success');
             } else {
-                toastr()->success('producto no agregado');
+                toastr()->warning('producto no agregado');
             }
         }
 
@@ -150,7 +150,7 @@ class CartController extends Controller
             toastr()->success('producto agregado');
             return redirect()->back()->with('success');
         } else {
-            toastr()->success('producto no agregado');
+            toastr()->warning('producto no agregado');
         }
         return redirect()->back()->with('success');
     }
@@ -158,7 +158,7 @@ class CartController extends Controller
 
     public function updateQuantityProductByDecrement(int $idProduct, int $quantity)
     {
-        $quantity --;
+        $quantity--;
         DB::Table('products')->where('id', $idProduct)->update(
             array(
                 'available' => $quantity
@@ -166,20 +166,21 @@ class CartController extends Controller
         );
     }
 
-    /*public function updateQuantityProductByDecrement(int $idProduct, int $quantity)
+    public function updateQuantityProductByDeleteProductOfCar(int $idProduct, int $quantity)
     {
-        $quantity --;
+        $product = Product::find($idProduct);
+        $quantity = $quantity +$product->available;
         DB::Table('products')->where('id', $idProduct)->update(
             array(
                 'available' => $quantity
             )
         );
-    }*/
+    }
 
 
     public function updateQuantityProductByIncrement(int $idProduct, int $quantity)
     {
-        $quantity ++;
+        $quantity++;
         DB::Table('products')->where('id', $idProduct)->update(
             array(
                 'available' => $quantity
@@ -193,16 +194,13 @@ class CartController extends Controller
      */
     public function delete(int $idProduct)
     {
-        $product = Product::find($idProduct);
-        $cart[$idProduct]['quantity'];
-
         $cart = session()->get('cart');
         foreach ($cart as $key => $value) {
             if ($idProduct == $value["id"]) {
+                $this->updateQuantityProductByDeleteProductOfCar($idProduct, $value['quantity']);
                 Session::pull('cart.' . $key);
                 break;
             }
-
         }
 
         toastr()->success('producto eliminado');
@@ -215,7 +213,10 @@ class CartController extends Controller
      */
     public function emptyCar()
     {
-
+        $cart = session()->get('cart');
+        foreach ($cart as $key => $value) {
+            $this->updateQuantityProductByDeleteProductOfCar($value["id"], $value['quantity']);
+        }
         Session::pull('cart');
         return redirect()->back();
     }
@@ -251,7 +252,7 @@ class CartController extends Controller
         var_dump("entro");
         $cart = session()->get('cart');
         if ($operations == 'sum') {
-            if ($product->available ==0) {
+            if ($product->available == 0) {
             } else {
                 $this->updateQuantityProductByDecrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']++;

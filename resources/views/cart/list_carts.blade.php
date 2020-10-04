@@ -35,6 +35,6 @@
             </tbody>
         </table>
         <div class="col-sm-12">
-        <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">inicio </a>
+        <a href="{{ URL::route('home.index') }}" class="btn btn-primary">inicio </a>
         </div>
 @endsection

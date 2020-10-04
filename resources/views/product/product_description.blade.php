@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">ver mas productos</a>
+            <a href="{{ URL::route('home.index') }}" class="btn btn-primary">ver mas productos</a>
             <hr>
         </div>
     </div>

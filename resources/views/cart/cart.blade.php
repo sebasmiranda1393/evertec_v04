@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{ route('cart.update', 1) }}" method="POST" class="form-horizontal">
+    <form action="{{ route('cart.store') }}" method="POST" class="form-horizontal">
         {{ csrf_field() }}
         <table id="cart" class="table table-hover table-condensed">
             <thead>
@@ -93,12 +93,15 @@
                 continue comprando</a>
 
 
-            <a href="{{ URL::route('order.empty', 2) }}" class="btn btn-primary">
+            <a href="{{ URL::route('order.empty', 1) }}" class="btn btn-primary">
                 vaciar carrito</a>
 
-            <a href="{{ URL::route('cart.store') }}" class="btn btn-primary">
-                guardar carrito</a>
+            <input type="submit" class=" btn btn-primary" value="guardar carrito"/>
+
+
         </td>
-
-
+    </form>
+        @jquery
+        @toastr_js
+        @toastr_render
 @endsection

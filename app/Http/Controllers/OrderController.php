@@ -193,9 +193,12 @@ class OrderController extends Controller
      */
     public function empty(int $idProduct)
     {
-        var_dump("entro a empty");
+        if ($idProduct == 0) {
+            Session::pull('cart');
+            return redirect()->back();
+        }
         $cart = session()->get('cart');
-        if ($cart!=null) {
+        if ($cart != null) {
             foreach ($cart as $key => $value) {
                 $this->updateQuantityProductByDeleteProductOfCar($value["id"], $value['quantity']);
             }
@@ -226,13 +229,14 @@ class OrderController extends Controller
         $cart = session()->get('cart');
         if ($operations == 'sum') {
             if ($product->available == 0) {
+                toastr()->warning('No hay mas existencias del producto');
             } else {
                 $this->updateQuantityProductByDecrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']++;
             }
         } else {
             if ($cart[$idProduct]['quantity'] == 1) {
-
+                toastr()->warning('No hay mas existencias del producto');
             } else {
                 $this->updateQuantityProductByIncrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']--;

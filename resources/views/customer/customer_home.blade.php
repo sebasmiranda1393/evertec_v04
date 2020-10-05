@@ -2,7 +2,6 @@
 @section('content')
     <form action="{{ route('product.show', 1) }}" method="GET" class="form-container">
         {{ csrf_field() }}
-
         <div class="row p-3 pb-4">
             <div class="col-md-3 offset-1">
                 <div class="input-group mb-3">
@@ -29,6 +28,10 @@
                     <i class="fas fa-shopping-cart fa-3x"> </i> </a>
             </div>
 
+            <div class="col-md-2">
+                <a href="{{ URL::route('cart.index') }}">
+                    <i class="fas fa-cart-arrow-down "> mi historial de compras</i> </a>
+            </div>
 
 
         </div>

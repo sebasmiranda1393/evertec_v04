@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <form action="{{ route('admin.search', 0) }}" method="GET" class="form-container">
+    <form action="{{ route('product.show', 1) }}" method="GET" class="form-container">
         <div class="row p-3 pb-4">
             <div class="col-md-3 offset-1">
                 <div class="input-group mb-3">
@@ -23,7 +23,7 @@
             </div>
 
             <div class=" col-sm-1">
-                <a href="{{ URL::route('home.index') }}" class="btn btn-primary "> Atras </a>
+                <a href="{{ URL::route('product.index') }}" class="btn btn-primary "> Atras </a>
             </div>
         </div>
     </form>

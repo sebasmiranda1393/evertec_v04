@@ -25,14 +25,11 @@
 
             <div class="col-sm-1">
                 <a
-                    href="{{ URL::route('cart.cart') }}">
+                    href="{{ URL::route('order.index') }}">
                     <i class="fas fa-shopping-cart fa-3x"> </i> </a>
             </div>
 
-            <div class="col-md-2">
-                <a href="{{ URL::route('list.carts') }}">
-                    <i class="fas fa-cart-arrow-down "> mi historial de compras</i> </a>
-            </div>
+
 
         </div>
 
@@ -53,7 +50,7 @@
 
 
                         <a class="add-to-cart"
-                           href="{{ route('cart.add-to-cart', $product->id) }}"
+                           href="{{ route('order.show', $product->id) }}"
                         >Me lo llevo! </a>
 
                     </div>

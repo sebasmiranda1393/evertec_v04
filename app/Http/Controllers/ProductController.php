@@ -75,7 +75,7 @@ class ProductController extends Controller
 
         $name_search = $request->get('namesearch');
         $valor_search = $request->get('valorsearch');
-        $products = Product::select('products.id', 'products.name', 'products.sale_price',
+        $products = Product::select('products.id', 'products.name', 'products.sale_price', 'products.productimg',
             'products.purchase_price','products.description' ,'categories.category', 'products.available' )
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->where('name', 'like', '%' . $name_search . '%')
@@ -85,7 +85,7 @@ class ProductController extends Controller
             return view('product/product', ["products" => $products]);
 
         } else  if ($id == 1){
-            return view('customer/customer_home', ["products" => $products]);
+            return view('admin/home_admin', ["products" => $products]);
         }
     }
 

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\AuthRequest;
+use App\Services\Auth\AuthRequest;
 use App\Cart;
 use App\CartProduct;
-use App\Models\placetopay\request\Amount;
-use App\PaymentRequest;
-use App\RedirectRequest;
+use App\Services\Payment\Amount;
+use App\Services\Payment\PaymentRequest;
+use App\Services\Request\RedirectRequest;
+use App\utils\Constants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -73,7 +74,7 @@ class CartController extends Controller
             }
             $this->loadRedirectRequest($amount);
             $this->cartController->empty(0);
-            return redirect()->back();
+          //  return redirect()->back();
         } else {
             return redirect()->back();
         }
@@ -137,28 +138,33 @@ class CartController extends Controller
 
     public function loadRedirectRequest($amount)
     {
-        //$amountRequest = new Amount('COP',$amount);
         $auth = new AuthRequest();
-        /* $auth->login = '6dd490faf9cb87a9862245da41170ff2';
-         $auth->tranKey = 'jsHJzM3+XG754wXh+aBvi70D9/4=';
-         $auth->nonce = 'TTJSa05UVmtNR000TlRrM1pqQTRNV1EREprWkRVMU9EZz0=';
-         $auth->seed = date('c');*/
-        $amountRequest = new Amount();
-        $amountRequest->currency = 'COP';
-        $amountRequest->total = $amount;
-        $paymentRequest = new PaymentRequest();
-        $paymentRequest->reference = '5976030f5575d';
-        $paymentRequest->description = 'Pago básico de prueba';
-        $paymentRequest->amount = $amountRequest;
-        $redirectRequest = new RedirectRequest();
-        $redirectRequest->auth = $auth;
-        $redirectRequest->payment = $paymentRequest;
+        $auth->setLogin(Constants::LOGIN);
+        $auth->setSeed(date('c'));
+        $auth->setNonce();
+        $auth->setTranKey(Constants::SECRET_KEY);
 
-        $redirectRequest->expiration = date('Y-m-d H:i:s', time());
-        $redirectRequest->returnUrl = 'https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d';
-        $redirectRequest->ipAddress = '27.0.0.1';
-        $redirectRequest->userAgent = 'PlacetoPay Sandbox';
-        echo($redirectRequest);
+        $amountRequest = new Amount();
+        $amountRequest->setCurrency('COP');
+        $amountRequest->setTotal($amount);
+
+        $paymentRequest = new PaymentRequest();
+        $paymentRequest->setReference('5976030f5575d');
+        $paymentRequest->setDescription('Pago básico de prueba');
+        $paymentRequest->setAmount($amountRequest);
+
+        $redirectRequest = new RedirectRequest();
+        $redirectRequest->setAuth($auth);
+        $redirectRequest->setPayment($paymentRequest);
+
+        $redirectRequest->setExpiration(date('Y-m-d H:i:s', time()));
+        $redirectRequest->setReturnUrl('https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d');
+        $redirectRequest->setIpAddress('27.0.0.1');
+        $redirectRequest->setUserAgent('PlacetoPay Sandbox');
+
+        var_dump($redirectRequest);
+      //  var_dump(json_encode((object)$redirectRequest));
+      //  var_dump(JSON_FORCE_OBJECT($redirectRequest));
 
 
     }

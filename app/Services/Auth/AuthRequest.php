@@ -2,6 +2,8 @@
 
 namespace App\Services\Auth;
 
+use App\utils\Constants;
+
 class AuthRequest
 {
 
@@ -51,8 +53,7 @@ class AuthRequest
      */
     public function setTranKey($tranKey): void
     {
-        $secretKey = $tranKey;
-        $this->tranKey = base64_encode(sha1($this->nonce . $this->seed . $secretKey, true));;
+        $this->tranKey = base64_encode(sha1($this->getNonce() . $this->getSeed() . Constants::SECRET_KEY, ));
     }
 
     /**

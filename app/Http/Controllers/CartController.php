@@ -140,11 +140,12 @@ class CartController extends Controller
     {
         $auth = new AuthRequest();
         $auth->setLogin(Constants::LOGIN);
-        $auth->setSeed(date('c'));
         $auth->setNonce();
+        $auth->setSeed(date('c'));
         $auth->setTranKey(Constants::SECRET_KEY);
+        var_dump($auth);
 
-        $amountRequest = new Amount();
+      /*  $amountRequest = new Amount();
         $amountRequest->setCurrency('COP');
         $amountRequest->setTotal($amount);
 
@@ -160,9 +161,9 @@ class CartController extends Controller
         $redirectRequest->setExpiration(date('Y-m-d H:i:s', time()));
         $redirectRequest->setReturnUrl('https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d');
         $redirectRequest->setIpAddress('27.0.0.1');
-        $redirectRequest->setUserAgent('PlacetoPay Sandbox');
+        $redirectRequest->setUserAgent('PlacetoPay Sandbox');*/
 
-        var_dump($redirectRequest);
+       // var_dump($redirectRequest);
       //  var_dump(json_encode((object)$redirectRequest));
       //  var_dump(JSON_FORCE_OBJECT($redirectRequest));
 

@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{ route('cart.update') }}" method="POST" class="form-horizontal">
+    <form action="{{ route('cart.store') }}" method="POST" class="form-horizontal">
         {{ csrf_field() }}
         <table id="cart" class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width:45%" class="text-center">Producto</th>
-                <th style="width:10%">Precio</th>
-                <th style="width:7%">cantidad</th>
-                <th style="width:12%" class="text-center">Subtotal</th>
-                <th style="width:28%"></th>
+                <th style="width:45%" class="text-center" bgcolor="#00bfff">Producto</th>
+                <th style="width:10%" bgcolor="#00bfff">Precio</th>
+                <th style="width:7%" bgcolor="#00bfff">cantidad</th>
+                <th style="width:12%" class="text-center" bgcolor="#00bfff">Subtotal</th>
+                <th style="width:28%" bgcolor="#00bfff"></th>
             </tr>
             </thead>
             <tbody>
@@ -54,19 +54,21 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <a href="{{ URL::route('cart.delete',$details['id'])  }}" type="submit"
+                                            <a href="{{ route('order.delete',$details['id'])  }}" type="submit"
                                                class="btn btn-danger "> eliminar</a>
                                         </div>
 
                                         <div class="col-md-3">
 
-                                            <a href="{{ URL::route('cart.increaseProduct',$details['id'])  }}" type="submit"
-                                               class="btn btn-danger "> +</a>
+                                            <a href="{{ URL::route('order.increaseProduct',$details['id'])  }}"
+                                               type="submit"
+                                               class="btn btn-danger"> +</a>
                                         </div>
 
                                         <div class="col-md-3">
 
-                                            <a href="{{ URL::route('cart.decreaseProduct',$details['id'])  }}" type="submit"
+                                            <a href="{{ URL::route('order.decreaseProduct',$details['id'])  }}"
+                                               type="submit"
                                                class="btn btn-danger "> -</a>
                                         </div>
                                     </div>
@@ -86,20 +88,20 @@
             </tfoot>
         </table>
 
-
         <td>
-            <a href="{{ URL::route('product.customer') }}" class="btn btn-primary">
+            <a href="{{ URL::route('home.index') }}" class="btn btn-primary">
                 continue comprando</a>
 
-            @csrf
-            @method('DELETE')
 
-            <a href="{{ URL::route('cart.emptyCar') }}" class="btn btn-primary">
+            <a href="{{ URL::route('order.empty', 1) }}" class="btn btn-primary">
                 vaciar carrito</a>
 
-            <a href="{{ URL::route('saveCart') }}" class="btn btn-primary">
-                guardar carrito</a>
+            <input type="submit" class=" btn btn-primary" value="guardar carrito"/>
+
+
         </td>
-
-
+    </form>
+        @jquery
+        @toastr_js
+        @toastr_render
 @endsection

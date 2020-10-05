@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <form action="{{ route('product.search', 0) }}" method="GET" class="form-horizontal">
+        <form action="{{ route('product.show', 0) }}" method="GET" class="form-horizontal">
             {{ csrf_field() }}
             <body style="background-color:#AED6F1;">
 
@@ -53,7 +53,11 @@
                         <tr>
                             <th scope="row">{{ $product->id}}</th>
                             <td>{{ $product->name}}</td>
-                            <td>{{ $product->category_id}}</td>
+                            @if($product->categoria!=null)
+                                <td>{{ $product->categoria->category}}</td>
+                            @else
+                                <td>{{ $product->category}}</td>
+                            @endif
                             <td>{{ $product->description}}</td>
                             <td>{{ $product->sale_price}}</td>
                             <td>{{ $product->purchase_price}}</td>

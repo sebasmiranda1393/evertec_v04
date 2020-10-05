@@ -54,6 +54,6 @@
             </tr>
             </tfoot>
         </table>
-        <a href="{{ URL::route('list.carts') }}" class="btn btn-primary">ver mas </a>
+        <a href="{{ URL::route('cart.index') }}" class="btn btn-primary">Atras </a>
 
 @endsection

@@ -8,15 +8,19 @@ use App\CartProduct;
 use App\Services\Payment\Amount;
 use App\Services\Payment\PaymentRequest;
 use App\Services\Request\RedirectRequest;
+use App\Services\Response\RedirectResponse;
 use App\utils\Constants;
 use Illuminate\Http\Request;
+//use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class CartController extends Controller
 {
 
     protected $cartController;
+
     public function __construct(OrderController $cartController)
     {
         $this->middleware('auth');
@@ -54,7 +58,7 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -74,9 +78,9 @@ class CartController extends Controller
             }
             $this->loadRedirectRequest($amount);
             $this->cartController->empty(0);
-          //  return redirect()->back();
+            //  return redirect()->back();
         } else {
-            return redirect()->back();
+          //  return redirect()->back();
         }
 
     }
@@ -84,7 +88,7 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -104,7 +108,7 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -115,8 +119,8 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -127,7 +131,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -145,7 +149,7 @@ class CartController extends Controller
         $auth->setTranKey(Constants::SECRET_KEY);
         var_dump($auth);
 
-      /*  $amountRequest = new Amount();
+        $amountRequest = new Amount();
         $amountRequest->setCurrency('COP');
         $amountRequest->setTotal($amount);
 
@@ -159,16 +163,36 @@ class CartController extends Controller
         $redirectRequest->setPayment($paymentRequest);
 
         $redirectRequest->setExpiration(date('Y-m-d H:i:s', time()));
-        $redirectRequest->setReturnUrl('https://dev.placetopay.com/redirection/sandbox/session/5976030f5575d');
+        $redirectRequest->setReturnUrl('http://127.0.0.1:8000/home?page=3');
         $redirectRequest->setIpAddress('27.0.0.1');
-        $redirectRequest->setUserAgent('PlacetoPay Sandbox');*/
+        $redirectRequest->setUserAgent('PlacetoPay Sandbox');
 
-       // var_dump($redirectRequest);
-      //  var_dump(json_encode((object)$redirectRequest));
-      //  var_dump(JSON_FORCE_OBJECT($redirectRequest));
+        $request_c = [
+            "auth" => [
+                "login" => Constants::LOGIN,
+                "tranKey" => $auth->getTranKey(),
+                "nonce" => $auth->getNonce(),
+                "seed" => $auth->getSeed()
+            ],
+            'payment' => [
+                'reference' => $paymentRequest->getReference(),
+                'description' => $paymentRequest->getDescription(),
+                'amount' => [
+                    'currency' => 'COP',
+                    'total' => $amountRequest->getTotal(),
+                ],
+            ],
+            'expiration' => date('c', strtotime('+2 days')),
+            'ipAddress' => $redirectRequest->getIpAddress(),
+            'userAgent' => $redirectRequest->getUserAgent(),
+            'returnUrl' => $redirectRequest->getReturnUrl(),
+        ];
 
+        $redirectResponse = new RedirectResponse();
+        $redirectResponse = Http::post('https://test.placetopay.com/redirection', $request_c);
+        echo('-----------------------------------------------------\n');
+
+        var_dump($redirectResponse->body());
 
     }
-
-
 }

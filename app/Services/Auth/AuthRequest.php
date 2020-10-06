@@ -53,7 +53,8 @@ class AuthRequest
      */
     public function setTranKey($tranKey): void
     {
-        $this->tranKey = base64_encode(sha1($this->getNonce() . $this->getSeed() . Constants::SECRET_KEY, ));
+
+        $this->tranKey =  base64_encode(sha1($this->getNonce() . $this->getSeed() . Constants::SECRET_KEY, true));
     }
 
     /**
@@ -75,9 +76,8 @@ class AuthRequest
             $nonce = mt_rand();
         }
 
-        $nonceBase64 = base64_encode($nonce);
 
-        $this->nonce = $nonceBase64;
+        $this->nonce = base64_encode($nonce);
     }
 
     /**

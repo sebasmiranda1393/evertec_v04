@@ -8,13 +8,14 @@ use App\CartProduct;
 use App\Services\Payment\Amount;
 use App\Services\Payment\PaymentRequest;
 use App\Services\Request\RedirectRequest;
-use App\Services\Response\RedirectResponse;
+use Illuminate\Http\RedirectResponse;
 use App\utils\Constants;
 use Illuminate\Http\Request;
-//use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Dnetix\Redirection\PlacetoPay;
+use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
@@ -63,7 +64,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if (session()->get('cart') != null) {
+     //   if (session()->get('cart') != null) {
             $cart = new Cart();
             $cart->user_id = Auth::user()->id;
             $cart->save();
@@ -76,12 +77,63 @@ class CartController extends Controller
                 $cartDetails->quantity = $value["quantity"];
                 $cartDetails->save();
             }
-            $this->loadRedirectRequest($amount);
-            $this->cartController->empty(0);
-            //  return redirect()->back();
-        } else {
-          //  return redirect()->back();
-        }
+
+            $reference = 'TEST_' . time();
+            $request = [
+                "locale" => "es_CO",
+                "payer" => [
+                    "name" => "Erika",
+                    "surname" => "orero",
+                    "email" => "ingerika.forero@gmail.com",
+                    "documentType" => "CC",
+                    "document" => "1848839248",
+                    "mobile" => "3006108300",
+                    "address" => [
+                        "street" => "703 Dicki Island Apt. 609",
+                        "city" => "North Randallstad",
+                        "state" => "Antioquia",
+                        "postalCode" => "46292",
+                        "country" => "US",
+                        "phone" => "363-547-1441 x383"
+                    ]
+                ],
+                "payment" => [
+                    "reference" => $reference,
+                    "description" => "Iusto sit et voluptatem.",
+                    "amount" => [
+                        "currency"=> "COP",
+                        "total"=> $amount
+                    ],
+                    "buyer" => [
+                        "name" => "Sebastian",
+                        "surname" => "Miranda Hernandez",
+                        "email" => "sebasmirandadc@gmail.com",
+                        "documentType" => "CC",
+                        "document" => "1073165535",
+                        "mobile" => "3144452921"
+                    ],
+                    "allowPartial" => false
+                ],
+                "expiration" => date('c', strtotime('+2 hour')),
+                "ipAddress" => "127.0.0.1",
+                "userAgent" => "PlacetoPay Sandbox",
+                "returnUrl" => "https://www.google.com/"
+            ];
+            $placetopay = new PlacetoPay([
+                'login' => config('placetopay.login'),
+                'tranKey' => config('placetopay.trankey'),
+                'url' => config('placetopay.url'),
+                'type' => config('placetopay.type'),
+                'rest' => [
+                    'timeout' => 45, // (optional) 15 by default
+                    'connect_timeout' => 30, // (optional) 5 by default
+                ]
+            ]);
+            $response = $placetopay->request($request);
+         //   var_dump(config('placetopay.url'));
+          return  redirect($response->processUrl() );
+
+        //$this->cartController->empty(0);
 
     }
 
@@ -139,60 +191,4 @@ class CartController extends Controller
         //
     }
 
-
-    public function loadRedirectRequest($amount)
-    {
-        $auth = new AuthRequest();
-        $auth->setLogin(Constants::LOGIN);
-        $auth->setNonce();
-        $auth->setSeed(date('c'));
-        $auth->setTranKey(Constants::SECRET_KEY);
-        var_dump($auth);
-
-        $amountRequest = new Amount();
-        $amountRequest->setCurrency('COP');
-        $amountRequest->setTotal($amount);
-
-        $paymentRequest = new PaymentRequest();
-        $paymentRequest->setReference('5976030f5575d');
-        $paymentRequest->setDescription('Pago básico de prueba');
-        $paymentRequest->setAmount($amountRequest);
-
-        $redirectRequest = new RedirectRequest();
-        $redirectRequest->setAuth($auth);
-        $redirectRequest->setPayment($paymentRequest);
-
-        $redirectRequest->setExpiration(date('Y-m-d H:i:s', time()));
-        $redirectRequest->setReturnUrl('http://127.0.0.1:8000/home?page=3');
-        $redirectRequest->setIpAddress('27.0.0.1');
-        $redirectRequest->setUserAgent('PlacetoPay Sandbox');
-
-        $request_c = [
-            "auth" => [
-                "login" => Constants::LOGIN,
-                "tranKey" => $auth->getTranKey(),
-                "nonce" => $auth->getNonce(),
-                "seed" => $auth->getSeed()
-            ],
-            'payment' => [
-                'reference' => $paymentRequest->getReference(),
-                'description' => $paymentRequest->getDescription(),
-                'amount' => [
-                    'currency' => 'COP',
-                    'total' => $amountRequest->getTotal(),
-                ],
-            ],
-            'expiration' => date('c', strtotime('+2 days')),
-            'ipAddress' => $redirectRequest->getIpAddress(),
-            'userAgent' => $redirectRequest->getUserAgent(),
-            'returnUrl' => $redirectRequest->getReturnUrl(),
-        ];
-
-        $redirectResponse = new RedirectResponse();
-        $redirectResponse = Http::post('https://test.placetopay.com/redirection', $request_c);
-        echo('-----------------------------------------------------\n');
-
-        var_dump($redirectResponse->body());
-
-    }
 }

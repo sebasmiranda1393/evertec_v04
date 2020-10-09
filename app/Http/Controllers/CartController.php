@@ -8,6 +8,7 @@ use App\CartProduct;
 use App\Services\Payment\Amount;
 use App\Services\Payment\PaymentRequest;
 use App\Services\Request\RedirectRequest;
+use Dnetix\Redirection\Message\RedirectInformation;
 use Illuminate\Http\RedirectResponse;
 use App\utils\Constants;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-     //   if (session()->get('cart') != null) {
+        if (session()->get('cart') != null) {
             $cart = new Cart();
             $cart->user_id = Auth::user()->id;
             $cart->save();
@@ -80,44 +81,26 @@ class CartController extends Controller
 
             $reference = 'TEST_' . time();
             $request = [
-                "locale" => "es_CO",
+                "locale" => config('locale'),
                 "payer" => [
-                    "name" => "Erika",
-                    "surname" => "orero",
-                    "email" => "ingerika.forero@gmail.com",
+                    "name" => Auth::user()->name,
+                    "surname" => "Forero",
+                    "email" => Auth::user()->email,
                     "documentType" => "CC",
-                    "document" => "1848839248",
-                    "mobile" => "3006108300",
-                    "address" => [
-                        "street" => "703 Dicki Island Apt. 609",
-                        "city" => "North Randallstad",
-                        "state" => "Antioquia",
-                        "postalCode" => "46292",
-                        "country" => "US",
-                        "phone" => "363-547-1441 x383"
-                    ]
+                    "document" => "1848839248"
                 ],
                 "payment" => [
                     "reference" => $reference,
-                    "description" => "Iusto sit et voluptatem.",
+                    "description" => config('description'),
                     "amount" => [
-                        "currency"=> "COP",
-                        "total"=> $amount
-                    ],
-                    "buyer" => [
-                        "name" => "Sebastian",
-                        "surname" => "Miranda Hernandez",
-                        "email" => "sebasmirandadc@gmail.com",
-                        "documentType" => "CC",
-                        "document" => "1073165535",
-                        "mobile" => "3144452921"
-                    ],
-                    "allowPartial" => false
+                        "currency" => "COP",
+                        "total" => $amount
+                    ]
                 ],
                 "expiration" => date('c', strtotime('+2 hour')),
                 "ipAddress" => "127.0.0.1",
                 "userAgent" => "PlacetoPay Sandbox",
-                "returnUrl" => "https://www.google.com/"
+                "returnUrl" => "http://127.0.0.1:8000/home"
             ];
             $placetopay = new PlacetoPay([
                 'login' => config('placetopay.login'),
@@ -130,11 +113,17 @@ class CartController extends Controller
                 ]
             ]);
             $response = $placetopay->request($request);
-         //   var_dump(config('placetopay.url'));
-          return  redirect($response->processUrl() );
-
-        //$this->cartController->empty(0);
-
+            if ($response->isSuccessful()) {
+                $this->cartController->empty(0);
+                return redirect($response->processUrl());
+            } else {
+                toastr()->info('No se pudo redireccionar a la pasarela de pagos!');
+                return redirect()->back();
+            }
+        } else {
+            toastr()->info('Por favor agregue articulos a su carrito!');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -145,7 +134,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        $data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
+        /*$data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
             'products.sale_price', 'cart_products.quantity')
             ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
             ->join('users', 'users.id', '=', 'carts.user_id')
@@ -154,7 +143,22 @@ class CartController extends Controller
             ->where('carts.id', $id)
             ->get();
 
-        return view('cart/my_carts', ['carts' => $data]);
+        return view('cart/my_carts', ['carts' => $data]);*/
+        $placetopay = new PlacetoPay([
+            'login' => config('placetopay.login'),
+            'tranKey' => config('placetopay.trankey'),
+            'url' => config('placetopay.url'),
+            'type' => config('placetopay.type'),
+            'rest' => [
+                'timeout' => 45, // (optional) 15 by default
+                'connect_timeout' => 30, // (optional) 5 by default
+            ]
+        ]);
+
+        $response = $placetopay->query(414525);
+
+     var_dump($response->status());
+
     }
 
     /**

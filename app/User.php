@@ -9,13 +9,14 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id',
     ];
 
     /**
@@ -36,45 +37,46 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+    /**
+     * Get the rol of a user.
+     */
+    public function rol()
     {
-        return $this
-            ->belongsToMany('App\Role')
-            ->withTimestamps();
+        return $this->belongsTo(Role::class, 'category_id', 'id');
     }
+
 
     /**
      * Show the application dashboard.
-     * @author sebastian miranda
      * @param array $roles description
      * @return bool
+     * @author sebastian miranda
      */
-    public function  authorizeRoles($roles): bool
+    public function authorizeRoles($roles): bool
     {
-      return $this->hasAnyRole($roles);
+        return $this->hasAnyRole($roles);
 
     }
 
     /**
      * Show the application dashboard.
-     * @author sebastian miranda
      * @param array/string $roles
      * @return bool
+     * @author sebastian miranda
      */
     public function hasAnyRole($roles)
     {
         if (is_array($roles)) {
 
-            $hasRoles = collect($roles)->filter(function ($item){
+            $hasRoles = collect($roles)->filter(function ($item) {
                 return $this->hasRole($item);
             })->count();
 
-            if ($hasRoles){
-            return true;
+            if ($hasRoles) {
+                return true;
             }
         } else {
-            if ($this->hasRole($roles))
-            {
+            if ($this->hasRole($roles)) {
                 return true;
             }
         }
@@ -89,12 +91,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function hasRole(string $role): bool
     {
-        if ($this->roles()->where('name', $role)->first())
-        {
-            if($role=='admin')
-            {
-                return true;
-            }
+        if ($role == 1) {
+            return true;
         }
         return false;
     }

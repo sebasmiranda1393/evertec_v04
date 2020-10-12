@@ -16,7 +16,7 @@ class Product extends Model
      */
     public function categoria()
     {
-        return $this->belongsTo(Category::class, 'id', 'category');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
 }

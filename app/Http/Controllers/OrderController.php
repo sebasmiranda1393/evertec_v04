@@ -9,10 +9,16 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware([
+            'auth'
+        ]);
+    }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -48,7 +54,6 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-
         $product = Product::find($id);
         if (!$product) {
 
@@ -258,3 +263,4 @@ class OrderController extends Controller
     }
 
 }
+

@@ -36,8 +36,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        var_dump("entro");
-        $data = Cart::select('carts.id', 'carts.created_at', DB::raw('sum(products.sale_price) as total'))
+        $data = Cart::select('carts.id', 'carts.created_at','carts.request_id' , DB::raw('sum(products.sale_price) as total'))
             ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
             ->join('users', 'users.id', '=', 'carts.user_id')
             ->join('products', 'products.id', '=', 'cart_products.product_id')
@@ -169,13 +168,7 @@ class CartController extends Controller
         ]);
 
         $response = $placetopay->query($requestId);
-         return view('cart/my_carts', ['carts' => $data],  ['status' => $response->status()]);
-      /*  foreach($response->status() as $id => $status){
-         //  var_dump($status['message']);
-        }
-    var_dump($response->status()->message());*/
-
-
+         return view('cart/my_carts', ['carts' => $data],  ['status' => $response->status()], ['id'=>$id]);
     }
 
     /**

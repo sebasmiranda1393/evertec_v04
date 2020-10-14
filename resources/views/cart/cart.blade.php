@@ -96,7 +96,7 @@
             <a href="{{ URL::route('order.empty', 1) }}" class="btn btn-primary">
                 vaciar carrito</a>
 
-            <input type="submit" class=" btn btn-primary" value="guardar carrito"/>
+            <input type="submit" class=" btn btn-primary" value="pagar"/>
 
 
         </td>

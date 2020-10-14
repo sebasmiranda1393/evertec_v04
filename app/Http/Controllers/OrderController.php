@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
 
+    /**
+     * OrderController constructor.
+     */
     public function __construct()
     {
         $this->middleware([
@@ -25,26 +30,7 @@ class OrderController extends Controller
         return view('cart/cart');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        var_dump("entro_create");
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        var_dump("entro_store");
-    }
 
     /**
      * Display the specified resource.
@@ -97,6 +83,7 @@ class OrderController extends Controller
             } else {
                 toastr()->warning('producto no agregado');
             }
+            return redirect()->back()->with('success');
         }
 
         if ($product->available > 0) {
@@ -116,29 +103,6 @@ class OrderController extends Controller
             toastr()->warning('producto no agregado');
         }
         return redirect()->back()->with('success');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        var_dump("entro_edit");
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update()
-    {
-        var_dump("entro_update");
     }
 
     /**
@@ -193,24 +157,7 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function empty(int $idProduct)
-    {
-        if ($idProduct == 0) {
-            Session::pull('cart');
-            return redirect()->back();
-        }
-        $cart = session()->get('cart');
-        if ($cart != null) {
-            foreach ($cart as $key => $value) {
-                $this->updateQuantityProductByDeleteProductOfCar($value["id"], $value['quantity']);
-            }
-            Session::pull('cart');
-        }
-        return redirect()->back();
-    }
+
 
     /**
      * @param int $idProduct
@@ -238,6 +185,7 @@ class OrderController extends Controller
             } else {
                 $this->updateQuantityProductByDecrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']++;
+                toastr()->success('producto agregado');
             }
         } else {
             if ($cart[$idProduct]['quantity'] == 1) {
@@ -245,6 +193,7 @@ class OrderController extends Controller
             } else {
                 $this->updateQuantityProductByIncrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']--;
+                toastr()->warning('has quitado una unidad de este producto');
             }
         }
         session()->put('cart', $cart);
@@ -261,6 +210,43 @@ class OrderController extends Controller
             )
         );
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function empty(int $idProduct)
+    {
+        if ($idProduct == 0) {
+            Session::pull('cart');
+            return redirect()->back();
+        }
+        $cart = session()->get('cart');
+        if ($cart != null) {
+            foreach ($cart as $key => $value) {
+                $this->updateQuantityProductByDeleteProductOfCar($value["id"], $value['quantity']);
+            }
+            Session::pull('cart');
+        }
+        return redirect()->back();
+    }
+
+    public function buyNow(int $idOrder)
+    {
+
+
+        $data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
+            'products.sale_price', 'cart_products.quantity', 'carts.request_id' )
+            ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->join('products', 'products.id', '=', 'cart_products.product_id')
+            ->where('carts.user_id', Auth::user()->id)
+            ->where('carts.id', $idOrder+1)
+            ->get();
+
+        return view('cart/cart_renow', ["carts" => $data]);
+    }
+
+
 
 }
 

@@ -8,21 +8,21 @@ use App\CartProduct;
 use App\Services\Payment\Amount;
 use App\Services\Payment\PaymentRequest;
 use App\Services\Request\RedirectRequest;
-use Dnetix\Redirection\Message\RedirectInformation;
-use Illuminate\Http\RedirectResponse;
-use App\utils\Constants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Dnetix\Redirection\PlacetoPay;
-use Illuminate\Support\Facades\Redirect;
+
 
 class CartController extends Controller
 {
 
     protected $cartController;
 
+    /**
+     * CartController constructor.
+     * @param OrderController $cartController
+     */
     public function __construct(OrderController $cartController)
     {
         $this->middleware('auth');
@@ -47,15 +47,7 @@ class CartController extends Controller
         return view('cart/list_carts', ["carts" => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -122,7 +114,6 @@ class CartController extends Controller
 
                 $this->cartController->empty(0);
 
-               // var_dump($response->requestId());
                 return redirect($response->processUrl());
             } else {
                 toastr()->info('No se pudo redireccionar a la pasarela de pagos!');
@@ -169,40 +160,6 @@ class CartController extends Controller
 
         $response = $placetopay->query($requestId);
          return view('cart/my_carts', ['carts' => $data],  ['status' => $response->status()], ['id'=>$id]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
 }

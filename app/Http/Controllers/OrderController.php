@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -127,6 +126,10 @@ class OrderController extends Controller
         return redirect()->back()->with('success');
     }
 
+    /**
+     * @param int $idProduct
+     * @param int $quantity
+     */
     public function updateQuantityProductByDecrement(int $idProduct, int $quantity)
     {
         $quantity--;
@@ -137,6 +140,10 @@ class OrderController extends Controller
         );
     }
 
+    /**
+     * @param int $idProduct
+     * @param int $quantity
+     */
     public function updateQuantityProductByIncrement(int $idProduct, int $quantity)
     {
         $quantity++;
@@ -200,6 +207,10 @@ class OrderController extends Controller
 
     }
 
+    /**
+     * @param int $idProduct
+     * @param int $quantity
+     */
     public function updateQuantityProductByDeleteProductOfCar(int $idProduct, int $quantity)
     {
         $product = Product::find($idProduct);
@@ -230,6 +241,10 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param int $idOrder
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function buyNow(int $idOrder)
     {
 

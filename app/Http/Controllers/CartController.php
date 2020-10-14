@@ -36,6 +36,7 @@ class CartController extends Controller
      */
     public function index()
     {
+        var_dump("entro");
         $data = Cart::select('carts.id', 'carts.created_at', DB::raw('sum(products.sale_price) as total'))
             ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
             ->join('users', 'users.id', '=', 'carts.user_id')
@@ -65,20 +66,11 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        $amount = 0;
         if (session()->get('cart') != null) {
-            $cart = new Cart();
-            $cart->user_id = Auth::user()->id;
-            $cart->save();
-            $amount = 0;
             foreach (session()->get('cart') as $key => $value) {
                 $amount += $value['price'] * $value['quantity'];
-                $cartDetails = new CartProduct();
-                $cartDetails->cart_id = $cart->id;
-                $cartDetails->product_id = $value["id"];
-                $cartDetails->quantity = $value["quantity"];
-                $cartDetails->save();
             }
-
             $reference = 'TEST_' . time();
             $request = [
                 "locale" => config('locale'),
@@ -114,7 +106,24 @@ class CartController extends Controller
             ]);
             $response = $placetopay->request($request);
             if ($response->isSuccessful()) {
+
+                $cart = new Cart();
+                $cart->user_id = Auth::user()->id;
+                $cart->request_id = $response->requestId();
+                $cart->save();
+                $amount = 0;
+                foreach (session()->get('cart') as $key => $value) {
+                    $amount += $value['price'] * $value['quantity'];
+                    $cartDetails = new CartProduct();
+                    $cartDetails->cart_id = $cart->id;
+                    $cartDetails->product_id = $value["id"];
+                    $cartDetails->quantity = $value["quantity"];
+                    $cartDetails->save();
+                }
+
                 $this->cartController->empty(0);
+
+               // var_dump($response->requestId());
                 return redirect($response->processUrl());
             } else {
                 toastr()->info('No se pudo redireccionar a la pasarela de pagos!');
@@ -134,8 +143,8 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        /*$data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
-            'products.sale_price', 'cart_products.quantity')
+        $data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
+            'products.sale_price', 'cart_products.quantity', 'carts.request_id' )
             ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
             ->join('users', 'users.id', '=', 'carts.user_id')
             ->join('products', 'products.id', '=', 'cart_products.product_id')
@@ -143,7 +152,11 @@ class CartController extends Controller
             ->where('carts.id', $id)
             ->get();
 
-        return view('cart/my_carts', ['carts' => $data]);*/
+        $requestId = 0;
+        foreach($data as $id => $details){
+            $requestId = $details['request_id'];
+        }
+
         $placetopay = new PlacetoPay([
             'login' => config('placetopay.login'),
             'tranKey' => config('placetopay.trankey'),
@@ -155,9 +168,13 @@ class CartController extends Controller
             ]
         ]);
 
-        $response = $placetopay->query(414525);
+        $response = $placetopay->query($requestId);
+         return view('cart/my_carts', ['carts' => $data],  ['status' => $response->status()]);
+      /*  foreach($response->status() as $id => $status){
+         //  var_dump($status['message']);
+        }
+    var_dump($response->status()->message());*/
 
-     var_dump($response->status());
 
     }
 

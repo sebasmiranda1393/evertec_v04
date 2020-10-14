@@ -3,11 +3,12 @@
         <table id="cart" class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width:45%" class="text-center">Producto</th>
+                <th style="width:30%" class="text-center">Producto</th>
                 <th style="width:10%">Precio</th>
-                <th style="width:7%">cantidad</th>
+                <th style="width:3%">cantidad</th>
                 <th style="width:12%" class="text-center">Subtotal</th>
-                <th style="width:28%">fecha de la compra</th>
+                <th style="width:15%">fecha de la compra</th>
+                <th style="width:28%">estado de la compra</th>
             </tr>
             </thead>
             <tbody>
@@ -42,7 +43,7 @@
                     <td data-th="quantity">{{ $details['quantity'] }}</td>
                     <td data-th="Subtotal" class="text-center">${{ $details['sale_price'] * $details['quantity'] }}</td>
                     <td data-th="created_at">{{ $details['created_at'] }}</td>
-
+                    <td data-th="created_at">{{ $status->message() }}</td>
                 </tr>
             @endforeach
 

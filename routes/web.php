@@ -2,20 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes(['verify' => true]);
 
+Route::get('c', function () {
+    return view('welcome');});
 
 Route::group(['prefix' => 'customers'], function () {
     Route::get('edit/{id}', 'CustomerController@edit')->name('customers.edit');
     Route::post('update/{user}', 'CustomerController@update')->name('customers.update');
     Route::get('back', 'CustomerController@back')->name('customers.back');
 });
-
-
-Auth::routes(['verify' => true]);
-
 
 Route::resource('home', HomeController::class);
 
@@ -28,7 +24,7 @@ Route::group(['prefix' => 'products'], function () {
 route::resource('admin', AdminController::class)->middleware('roleAdmin');
 
 
-route::resource('cart', CartController::class);
+route::resource('cart', CartController::class)->middleware('roleCustomer');
 
 
 route::resource('order', OrderController::class);

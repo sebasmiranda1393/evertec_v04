@@ -9,6 +9,9 @@ use DB;
 class ProductController extends Controller
 {
 
+    /**
+     * ProductController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');

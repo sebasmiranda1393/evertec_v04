@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    /**
+     * CustomerController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -76,7 +79,7 @@ class CustomerController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function back()
+    protected function back(): view
     {
         return redirect()->route('home');
     }

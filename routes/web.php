@@ -28,6 +28,12 @@ route::resource('cart', CartController::class)->middleware('roleCustomer');
 
 
 route::resource('order', OrderController::class);
+Route::group(['prefix' => 'order'], function () {
+    Route::get('buyNow/{id}', 'OrderController@buyNow')->name('order.buy_now')->middleware('roleCustomer');
+    Route::get('increaseProduct/{id}', 'OrderController@increaseProduct')->name('order.increaseProduct')->middleware('roleCustomer');
+    Route::get('decreaseProduct/{id}', 'OrderController@decreaseProduct')->name('order.decreaseProduct')->middleware('roleCustomer');
+    Route::get('delete/{id}', 'OrderController@delete')->name('order.delete')->middleware('roleCustomer');
+});
 
 Route::group(['prefix' => 'order'], function () {
     Route::get('empty/{id}', 'OrderController@empty')->name('order.empty')->middleware('roleCustomer');

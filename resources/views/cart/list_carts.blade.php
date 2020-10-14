@@ -3,10 +3,10 @@
     <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
-            <th style="width:25%" class="text-center" bgcolor="#00bfff">mis compras</th>
-            <th style="width:25%" class="text-center" bgcolor="#00bfff">fecha de la compra</th>
-            <th style="width:25%" class="text-center" bgcolor="#00bfff">valor de mi compra</th>
-            <th style="width:25%" class="text-center" bgcolor="#00bfff">ver mi compra</th>
+            <th style="width:20%" class="text-center" bgcolor="#00bfff">mis compras</th>
+            <th style="width:20%" class="text-center" bgcolor="#00bfff">fecha de la compra</th>
+            <th style="width:20%" class="text-center" bgcolor="#00bfff">valor de mi compra</th>
+            <th style="width:20%" class="text-center" bgcolor="#00bfff">ver mi compra</th>
 
 
         </tr>

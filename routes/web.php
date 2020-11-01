@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'customers'], function () {
+    Route::group(['prefix' => 'customers'], function () {
     Route::get('edit/{id}', 'CustomerController@edit')->name('customers.edit');
     Route::post('update/{user}', 'CustomerController@update')->name('customers.update');
     Route::get('back', 'CustomerController@back')->name('customers.back');
@@ -27,6 +27,8 @@ Route::group(['prefix' => 'products'], function () {
 
 route::resource('admin', AdminController::class)->middleware('roleAdmin');
 
+Route::resource('excel', ImportExcelController::class);
+//Route::get('excel', 'ImportExcelController@export')->name('excel.export');
 
 route::resource('cart', CartController::class);
 
@@ -38,6 +40,10 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('increaseProduct/{id}', 'OrderController@increaseProduct')->name('order.increaseProduct')->middleware('roleCustomer');
     Route::get('decreaseProduct/{id}', 'OrderController@decreaseProduct')->name('order.decreaseProduct')->middleware('roleCustomer');
     Route::get('delete/{id}', 'OrderController@delete')->name('order.delete')->middleware('roleCustomer');
+
+
+
+
 });
 
 

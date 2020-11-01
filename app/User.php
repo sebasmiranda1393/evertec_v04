@@ -44,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the rol of a user.
      */
-    public function rol()
+    public function rol(): object
     {
         return $this->belongsTo(Role::class, 'category_id', 'id');
     }
@@ -68,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return bool
      * @author sebastian miranda
      */
-    public function hasAnyRole($roles)
+    public function hasAnyRole($roles): bool
     {
         if (is_array($roles)) {
 
@@ -100,6 +100,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return false;
     }
+
 
 }
 

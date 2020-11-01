@@ -6,6 +6,9 @@ use App\Http\Status;
 
 class StatusesController extends Controller
 {
+    /**
+     *
+     */
     public function store()
     {
         Status::create([

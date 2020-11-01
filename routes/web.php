@@ -2,20 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes(['verify' => true]);
 
+Route::get('c', function () {
+    return view('welcome');});
 
     Route::group(['prefix' => 'customers'], function () {
     Route::get('edit/{id}', 'CustomerController@edit')->name('customers.edit');
     Route::post('update/{user}', 'CustomerController@update')->name('customers.update');
     Route::get('back', 'CustomerController@back')->name('customers.back');
 });
-
-
-Auth::routes(['verify' => true]);
-
 
 Route::resource('home', HomeController::class);
 
@@ -30,10 +26,16 @@ route::resource('admin', AdminController::class)->middleware('roleAdmin');
 Route::resource('excel', ImportExcelController::class);
 //Route::get('excel', 'ImportExcelController@export')->name('excel.export');
 
-route::resource('cart', CartController::class);
+route::resource('cart', CartController::class)->middleware('roleCustomer');
 
 
 route::resource('order', OrderController::class);
+Route::group(['prefix' => 'order'], function () {
+    Route::get('buyNow/{id}', 'OrderController@buyNow')->name('order.buy_now')->middleware('roleCustomer');
+    Route::get('increaseProduct/{id}', 'OrderController@increaseProduct')->name('order.increaseProduct')->middleware('roleCustomer');
+    Route::get('decreaseProduct/{id}', 'OrderController@decreaseProduct')->name('order.decreaseProduct')->middleware('roleCustomer');
+    Route::get('delete/{id}', 'OrderController@delete')->name('order.delete')->middleware('roleCustomer');
+});
 
 Route::group(['prefix' => 'order'], function () {
     Route::get('empty/{id}', 'OrderController@empty')->name('order.empty')->middleware('roleCustomer');

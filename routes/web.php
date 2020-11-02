@@ -24,7 +24,10 @@ Route::group(['prefix' => 'products'], function () {
 route::resource('admin', AdminController::class)->middleware('roleAdmin');
 
 Route::resource('excel', ImportExcelController::class);
-//Route::get('excel', 'ImportExcelController@export')->name('excel.export');
+Route::group(['prefix' => 'excel'], function () {
+    Route::get('export', 'ImportExcelController@exportProducts')->name('excel.exportProducts');
+});
+
 
 route::resource('cart', CartController::class)->middleware('roleCustomer');
 

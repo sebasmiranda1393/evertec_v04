@@ -37,6 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public static function create(array $array)
+    {
+    }
+
     /**
      * Get the rol of a user.
      */

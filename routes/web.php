@@ -7,7 +7,7 @@ Auth::routes(['verify' => true]);
 Route::get('c', function () {
     return view('welcome');});
 
-Route::group(['prefix' => 'customers'], function () {
+    Route::group(['prefix' => 'customers'], function () {
     Route::get('edit/{id}', 'CustomerController@edit')->name('customers.edit');
     Route::post('update/{user}', 'CustomerController@update')->name('customers.update');
     Route::get('back', 'CustomerController@back')->name('customers.back');
@@ -22,6 +22,11 @@ Route::group(['prefix' => 'products'], function () {
 });
 
 route::resource('admin', AdminController::class)->middleware('roleAdmin');
+
+Route::resource('excel', ImportExcelController::class);
+Route::group(['prefix' => 'excel'], function () {
+    Route::get('export', 'ImportExcelController@exportProducts')->name('excel.exportProducts');
+});
 
 
 route::resource('cart', CartController::class)->middleware('roleCustomer');
@@ -40,6 +45,10 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('increaseProduct/{id}', 'OrderController@increaseProduct')->name('order.increaseProduct')->middleware('roleCustomer');
     Route::get('decreaseProduct/{id}', 'OrderController@decreaseProduct')->name('order.decreaseProduct')->middleware('roleCustomer');
     Route::get('delete/{id}', 'OrderController@delete')->name('order.delete')->middleware('roleCustomer');
+
+
+
+
 });
 
 

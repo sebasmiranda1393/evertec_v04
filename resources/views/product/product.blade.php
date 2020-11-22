@@ -14,7 +14,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="input-group mb-3">
                         <input id="valorsearch" name="valorsearch" type="text" class="form-control"
                                placeholder="Buscar por valor venta">
@@ -26,6 +26,14 @@
 
                 <div class="col-md-1">
                     <a href="{{ route('product.create') }}" class="btn btn-primary "> Crear </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="{{ route('excel.index') }}" class="btn btn-primary "> importar excel </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="{{ route('excel.exportProducts') }}" class="btn btn-primary "> Exportar excel </a>
                 </div>
 
             </div>

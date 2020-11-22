@@ -8,10 +8,10 @@
 
                 </body>
                 <div class="card">
-                    <div class="card-header">Edite el producto</div>
+                    <div class="card-header">Edite el producto aqui</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('product.update', $product)}}">
+                        <form method="POST" action="{{ route('product.update', $product)}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                            @method('PUT')
                             <div class="form-group row">

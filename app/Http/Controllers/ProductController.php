@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -113,13 +113,13 @@ class ProductController extends Controller
      */
     public function update( Request  $request, Product $product)
     {
-        var_dump("entro");
+
        if ($request->hasfile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
-            $filename = $request->input('name') . time() . '.' . $extension;
+            $filename = $request->input('name').time().'.'.$extension;
             $file->move('image/products', $filename);
-            DB::Table('products')->where('id', $product . $id)->update(
+            DB::Table('products')->where('id', $product->id)->update(
                 array(
                     'productimg' => $filename
                 )

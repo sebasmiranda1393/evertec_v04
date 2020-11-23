@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-Route::get('c', function () {
+Route::get('/', function () {
     return view('welcome');});
 
     Route::group(['prefix' => 'customers'], function () {
@@ -28,6 +28,7 @@ Route::group(['prefix' => 'excel'], function () {
     Route::get('export', 'ImportExcelController@exportProducts')->name('excel.exportProducts');
 });
 
+Route::resource('informe', InformesController::class);
 
 route::resource('cart', CartController::class)->middleware('roleCustomer');
 

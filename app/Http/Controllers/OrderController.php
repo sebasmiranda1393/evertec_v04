@@ -247,8 +247,6 @@ class OrderController extends Controller
      */
     public function buyNow(int $idOrder)
     {
-
-
         $data = Cart::select('carts.id', 'carts.created_at', 'products.name', 'products.id', 'products.productimg',
             'products.sale_price', 'cart_products.quantity', 'carts.request_id' )
             ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
@@ -260,8 +258,5 @@ class OrderController extends Controller
 
         return view('cart/cart_renow', ["carts" => $data]);
     }
-
-
-
 }
 

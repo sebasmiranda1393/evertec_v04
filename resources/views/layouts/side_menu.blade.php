@@ -16,6 +16,18 @@
                     </div>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('admin.index') }}">
+                    <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <span class="menu-title">empleados</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product.index') }}">
+                    <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <span class="menu-title">Productos</span>
+                </a>
+            </li>
             <li class="nav-item pt-3">
                 <a class="nav-link {{ Request::is('home') ? 'btn-info' : '' }}" href="{{ route('home.index') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
@@ -23,9 +35,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product.index') }}">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('report.create') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
-                    <span class="menu-title">Productos</span>
+                    <span class="menu-title">informes</span>
                 </a>
             </li>
             <li class="nav-item">

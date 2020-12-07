@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-class ImportExcelController extends Controller
+class ImportProductController extends Controller
 {
     /**
      * Display a listing of the resource.

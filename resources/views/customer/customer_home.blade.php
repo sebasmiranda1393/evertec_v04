@@ -49,22 +49,19 @@
 
                             @else
                                 <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
-                             @endif
-
+                        @endif
 
                         <a class="add-to-cart"
                            href="{{ route('order.show', $product->id) }}"
                         >Me lo llevo! </a>
-
                     </div>
+
                     <div class="product-content">
                         <h3 class="title"><a
                                 href="{{ route('product.description', $product->id) }}">{{ $product->name}} </a>
                         </h3>
                         <span class="price">${{ $product->sale_price}}</span>
                     </div>
-
-
                 </div>
             </div>
         @endforeach

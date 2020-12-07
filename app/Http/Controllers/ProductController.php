@@ -8,15 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-
-    /**
-     * ProductController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +43,6 @@ class ProductController extends Controller
         $product->sale_price = $request->input('price-buy');
         $product->available = $request->input('quantity');
         $product->category_id = 1;
-        var_dump($product);
 
         if ($request->hasfile('image')) {
             $file = $request->file('image');
@@ -74,23 +64,7 @@ class ProductController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, int $id)    {
 
-        $name_search = $request->get('namesearch');
-        $valor_search = $request->get('valorsearch');
-        $products = Product::select('products.id', 'products.name', 'products.sale_price', 'products.productimg',
-            'products.purchase_price','products.description' ,'categories.category', 'products.available' )
-            ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->where('name', 'like', '%' . $name_search . '%')
-            ->where('sale_price', 'like', '%' . $valor_search . '%')
-            ->where('status', true)->paginate(4);
-        if ($id == 0) {
-            return view('product/product', ["products" => $products]);
-
-        } else  if ($id == 1){
-            return view('admin/home_admin', ["products" => $products]);
-        }
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -156,7 +130,6 @@ class ProductController extends Controller
      */
     public function back()
     {
-        var_dump("entro");
         return redirect()->route('product');
     }
 
@@ -166,7 +139,7 @@ class ProductController extends Controller
      */
     public function description(int $id)
     {
-        $product = Product::find($id);
+        $producst = Product::find($id);
         return view('product/product_description', ["product" => $product]);
 
     }
@@ -189,6 +162,21 @@ class ProductController extends Controller
 
         } else {
             return view('product/welcome', ["products" => $products]);
+        }
+    }
+    public function show(Request $request, int $id)
+    {
+        $namesearch = $request->get('namesearch');
+        $valorsearch = $request->get('valorsearch');
+        $products = DB::Table('products')->where('name', 'like', '%' . $namesearch . '%')
+            ->where('sale_price', 'like', '%' . $valorsearch . '%')
+            ->where('status', true)->paginate(4);
+
+        if ($id == 0) {
+            return view('admin/home_admin', ["products" => $products]);
+
+        } else {
+            return view('admin/home_admin', ["products" => $products]);
         }
     }
 }

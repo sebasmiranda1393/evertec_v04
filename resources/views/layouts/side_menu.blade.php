@@ -12,7 +12,7 @@
                         <div class="col-sm-4  col-md-4"></div>
                     </div>
                     <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
-                        <span class="text-secondary icon-sm text-center">{{ Auth::user()->name }}</span>
+                        <span class="text-secondary icon-sm text-center">{{ Auth::user() }}</span>
                     </div>
                 </a>
             </li>

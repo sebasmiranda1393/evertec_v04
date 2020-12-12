@@ -19,6 +19,7 @@ Route::resource('home', HomeController::class);
 Route::resource('product', ProductController::class);
 
 Route::group(['prefix' => 'products'], function () {
+    Route::get('back', 'CustomerController@backCustomer')->name('backCustomer');
     Route::get('description/{id}', 'ProductController@description')->name('product.description')->middleware('roleCustomer');
 });
 
@@ -34,8 +35,11 @@ Route::resource('report', ReportController::class)->only([ "create"]);
 Route::group(['prefix' => 'report'], function () {
     Route::post('byDate', 'ReportController@reportByDateTopSellingProduct')->name('reportByDateTopSellingProduct');
     Route::post('report', 'ReportController@higher_quantity')->name('higher_quantity');
-    Route::post('less', 'ReportController@less_quantity')->name('less_quantity');
-    Route::post('mayorUnidades', 'ReportController@mayorUnidades')->name('mayorUnidades');
+    Route::post('stock', 'ReportController@stockProducts')->name('stockProducts');
+    Route::post('less_quantity', 'ReportController@less_quantity')->name('less_quantity');
+    Route::get('view', 'ReportController@view')->name('view');
+    Route::post('download_report', 'ReportController@download_report')->name('download_report');
+    Route::get('back', 'ReportController@back')->name('back');
 });
 
 route::resource('cart', CartController::class)->middleware('roleCustomer');

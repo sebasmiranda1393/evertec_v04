@@ -32,12 +32,10 @@
                 <a href="{{ URL::route('cart.index') }}">
                     <i class="fas fa-cart-arrow-down "> mi historial de compras</i> </a>
             </div>
-
-
         </div>
-
-
     </form>
+
+  <form>
     <div class="row list-group-horizontal pt-5">
         @foreach ($products as $product)
             <div class="col-md-2 col-sm-2 offset-1">
@@ -64,12 +62,12 @@
                     </div>
                 </div>
             </div>
+
         @endforeach
-
-
-        <div class="col-md-2 offset-5 ">
-            {{ $products->render() }}
-        </div>
+  </form>
+            <div class="col-md-2 offset-5 ">
+                {{ $products->render() }}
+            </div>
 
         <hr>
         @jquery

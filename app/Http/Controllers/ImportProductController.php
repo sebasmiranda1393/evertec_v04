@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-class ImportExcelController extends Controller
+class ImportProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,14 +24,15 @@ class ImportExcelController extends Controller
 
     function show()
     {
-        $File="Archivo Primario";
 
-        $data=array(
-            array("id","name","description","purchase_price","sale_price","available","productimg","status","category_id")
+        $File = "Archivo Primario";
+
+        $data = array(
+            array("id", "name", "description", "purchase_price", "sale_price", "available", "productimg", "status", "category_id")
         );
         $products = Product::with('categoria')->get();
 
-        foreach ($products as $row){
+        foreach ($products as $row) {
 
             array_push($data, array(
                 $row->id,
@@ -48,7 +49,7 @@ class ImportExcelController extends Controller
 
 
         $export = new ArchivoPrimarioExport($data);
-        return Excel::download($export, $File.'.xlsx');
+        return Excel::download($export, $File . '.xlsx');
 
 
     }
@@ -74,19 +75,5 @@ class ImportExcelController extends Controller
         }
     }
 
-    public function exportProducts()
-    {
-        var_dump("entro");
-        \Excel::create('Products', function($excel) {
 
-            $products = Product::with('categoria')->get();
-
-            $excel->sheet('Products', function($sheet) use($products) {
-
-                $sheet->fromArray($products);
-
-            });
-
-        })->export('xlsx');
-    }
 }

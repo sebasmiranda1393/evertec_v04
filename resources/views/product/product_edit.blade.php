@@ -94,6 +94,7 @@
                                     <input id="image" type="file" name="image"/>
                                 </div>
                             </div>
+
                             <div class="form-group row mb-0 mt-5">
                                 <div class="col-sm-3 offset-4">
                                     <a href="{{ route('product.index') }}" class="btn btn-primary "> Atras </a>

@@ -7,6 +7,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<body style="background-color:#AED6F1;">
+
+</body>
 <br/>
 
 <div class="container">

@@ -16,19 +16,6 @@ use Dnetix\Redirection\PlacetoPay;
 
 class CartController extends Controller
 {
-
-    protected $cartController;
-
-    /**
-     * CartController constructor.
-     * @param OrderController $cartController
-     */
-    public function __construct(OrderController $cartController)
-    {
-        $this->middleware('auth');
-        $this->cartController = $cartController;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -103,6 +90,7 @@ class CartController extends Controller
                 $cart->request_id = $response->requestId();
                 $cart->save();
                 $amount = 0;
+
                 foreach (session()->get('cart') as $key => $value) {
                     $amount += $value['price'] * $value['quantity'];
                     $cartDetails = new CartProduct();

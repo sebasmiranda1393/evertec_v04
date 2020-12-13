@@ -4,16 +4,23 @@
             <li class="nav-item nav-profile border-bottom ">
                 <a href="#" class="nav-link flex-column">
                     <div class="row">
-                        <div class="col-sm-4 col-md-4"></div>
-                        <div class="col-sm-4  col-md-4 nav-profile-image">
-                            <img src="{{ asset('image/face1.jpg') }}" alt="profile">
-                            <!--change to offline or busy as needed-->
+                        <div class="col-sm-2 col-md-1"></div>
+                        <div class="col-sm-1  col-md-4 nav-profile-image">
+                            <img src="https://img.icons8.com/cute-clipart/64/000000/shop.png"/>
                         </div>
-                        <div class="col-sm-4  col-md-4"></div>
                     </div>
-                    <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
-                        <span class="text-secondary icon-sm text-center">{{ Auth::user()->name }}</span>
-                    </div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('rol') }}">
+                    <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <span class="menu-title">roles</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product.index') }}">
+                    <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <span class="menu-title">Productos</span>
                 </a>
             </li>
             <li class="nav-item pt-3">
@@ -23,9 +30,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('product.index') }}">
+                <a class="nav-link {{ Request::is('product/index') ? 'btn-info' : '' }}" href="{{ route('report.create') }}">
                     <i class="mdi mdi-compass-outline menu-icon"></i>
-                    <span class="menu-title">Productos</span>
+                    <span class="menu-title">informes</span>
                 </a>
             </li>
             <li class="nav-item">

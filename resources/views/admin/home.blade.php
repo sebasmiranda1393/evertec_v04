@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row ">
-            <body style="background-color:#B5D4C8;">
+            <body style="background-color:#AED6F1;">
 
             </body>
             <div class="col-md-10 offset-md-2">
@@ -25,6 +25,7 @@
                         <th scope="col">Correo electronico</th>
                         <th scope="col">Fecha creado</th>
                         <th scope="col">Fecha actualizacion</th>
+                        <th scope="col">rol</th>
                         <th scope="col">Editar</th>
                     </tr>
                     </thead>
@@ -33,10 +34,11 @@
 
                         <tr>
                             <th scope="row">{{ $user->id}}</th>
-                            <td>{{ $user->name}}</td>
+                            <td>{{ $user->nombre}}</td>
                             <td>{{ $user->email}}</td>
                             <td>{{ $user->created_at}}</td>
                             <td>{{ $user->updated_at}}</td>
+                            <td>{{ $user->name}}</td>
                             <td>
                                 @if($user->status==true)
                                     Habilitado

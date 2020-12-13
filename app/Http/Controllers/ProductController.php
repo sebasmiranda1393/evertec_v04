@@ -139,7 +139,7 @@ class ProductController extends Controller
      */
     public function description(int $id)
     {
-        $producst = Product::find($id);
+        $product = Product::find($id);
         return view('product/product_description', ["product" => $product]);
 
     }

@@ -56,7 +56,9 @@ Route::group(['prefix' => 'order'], function () {
 
     });
 
+Route::get('rol', 'RolController@index')->name('rol');
 
-
+Route::get('notes', 'NotesController@index')->name('notes');
+Route::get('notes/{id}/destroy', 'NotesController@destroy')->name('notes.destroy');
 
 

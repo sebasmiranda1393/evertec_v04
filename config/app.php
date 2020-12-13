@@ -163,12 +163,13 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
         Laracasts\Flash\FlashServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

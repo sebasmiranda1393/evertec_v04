@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 
 class CustomerController extends Controller
@@ -16,7 +17,9 @@ class CustomerController extends Controller
     public function edit(int $id)
     {
         $user = User::find($id);
-        return view('customer/customer_edit', ["user" => $user]);
+
+        $roles = DB::table('roles')->get();
+        return view('customer/customer_edit', ["user" => $user],["roles" => $roles]);
     }
 
     /**
@@ -27,10 +30,11 @@ class CustomerController extends Controller
      */
     public function update(User $user, Request $request)
     {
-        $this->validate($request, [
+     $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'rol' => 'required'
         ]);
 
         DB::Table('users')->where('id', $user->id)->update(
@@ -40,7 +44,17 @@ class CustomerController extends Controller
                 'email' => $request->get('email')
             )
         );
-        return redirect()->route('home');
+        $rolesUserName = $user->getRoleNames();
+        $rol=Role::findByName($rolesUserName[0]);
+
+        $user->removeRole($rol);
+        $user->assignRole($request->get('rol'));
+        $data = User::select('users.id','users.name as nombre','users.email', 'users.status','users.created_at' , 'users.updated_at','roles.name')
+            ->leftjoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->leftjoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->get();
+        return view('admin/home', ["users" => $data]);
+
     }
 
 
@@ -49,6 +63,13 @@ class CustomerController extends Controller
      */
     protected function back()
     {
-        return view('customer/customer_home', ['products' => $products]);
+        $data = User::select('users.id','users.name as nombre','users.email', 'users.status','users.created_at' , 'users.updated_at','roles.name')
+            ->leftjoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->leftjoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->get();
+        return view('admin/home', ["users" => $data]);
+
     }
+
+
 }

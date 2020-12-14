@@ -16,18 +16,20 @@ Route::group(['prefix' => 'customers'], function () {
 
 Route::resource('home', HomeController::class);
 
-Route::resource('product', ProductController::class);
-
 Route::group(['prefix' => 'products'], function () {
+    Route::get('show/{id}', 'ProductController@show')->name('product.show');
     Route::get('back', 'CustomerController@backCustomer')->name('backCustomer');
     Route::get('description/{id}', 'ProductController@description')->name('product.description')->middleware('roleCustomer');
 });
+Route::resource('product', ProductController::class)->only(["update", "destroy","store", "index", "create", "edit"])->middleware('roleAdmin');
+
+
 
 route::resource('admin', AdminController::class)->middleware('roleAdmin');
 
-Route::resource('excel', ImportProductController::class)->only(["show", "store", "index"]);
+Route::resource('excel', ImportProductController::class)->only(["show", "store", "index"])->middleware('roleAdmin');;
 Route::group(['prefix' => 'excel'], function () {
-    Route::get('export', 'ImportProductController@exportProducts')->name('excel.exportProducts');
+    Route::get('export', 'ImportProductController@exportProducts')->name('excel.exportProducts')->middleware('roleAdmin');;
 
 });
 
@@ -56,9 +58,17 @@ Route::group(['prefix' => 'order'], function () {
 
     });
 
-Route::get('rol', 'RolController@index')->name('rol');
+
+Route::resource('rol', RolController::class)->only([ "index","show", "edit"]);
+Route::group(['prefix' => 'rol'], function () {
+    Route::post('update/{rol}', 'RolController@update')->name('rol.update');
+});
 
 Route::get('notes', 'NotesController@index')->name('notes');
 Route::get('notes/{id}/destroy', 'NotesController@destroy')->name('notes.destroy');
+
+Route::group(['prefix' => 'accesoDenegado'], function () {
+    Route::get('accesoDenegado', 'AuthController@index')->name('accesoDenegado');
+});
 
 

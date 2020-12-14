@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+
+    @can('order')
+
     <form  class="form-horizontal">
         {{ csrf_field() }}
         <table id="cart" class="table table-hover table-condensed">
@@ -100,4 +103,17 @@
     @jquery
     @toastr_js
     @toastr_render
+
+    @else
+        <div class="card">
+            <div class="col m-1">
+                <label>NO TIENE PERMISOS PARA ESTA FUNCION </label>
+            </div>
+
+
+            <div class=" col-sm-1">
+                <a href="{{ URL::route('home.index') }}" class="btn btn-primary "> Atras </a>
+            </div>
+    @endcan
+
 @endsection

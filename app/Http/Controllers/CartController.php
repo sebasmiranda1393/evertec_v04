@@ -16,6 +16,18 @@ use Dnetix\Redirection\PlacetoPay;
 
 class CartController extends Controller
 {
+    protected $cartController;
+
+
+    /**
+     * CartController constructor.
+     * @param OrderController $cartController
+     */
+    public function __construct(OrderController $cartController)    {
+
+        $this->cartController = $cartController;
+    }
+
     /**
      * Display a listing of the resource.
      *

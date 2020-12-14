@@ -58,7 +58,6 @@ class ReportController extends Controller
     public function stockProducts(Request $request)
     {
         $ordenamiento = "=";
-
         if ($request->input('mayor') != null) {
             $ordenamiento = ">=";
         } else if ($request->input('menor') != null) {

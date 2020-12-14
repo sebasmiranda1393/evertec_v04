@@ -23,14 +23,12 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        $user = User::find(Auth::user()->id);
-        $rolesUser = $user->roles();
-        $users = User::all();
+     $user = User::find(Auth::user()->id);
         $data = User::select('users.id','users.name as nombre','users.email', 'users.status','users.created_at' , 'users.updated_at','roles.name')
             ->leftjoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
             ->leftjoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->get();
-        if ($user->hasRole('Administrator')) {
+        if ($user->hasRole('Administrador')) {
             return view('admin/home', ["users" => $data]);
         } else {
             $products = DB::table('products')->where('status', true)->paginate(4);

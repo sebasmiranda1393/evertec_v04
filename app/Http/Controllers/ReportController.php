@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\CartProduct;
 use App\Exports\ArchivoPrimarioExport;
+use App\Jobs\ProductReport;
+use App\Jobs\Reports;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -168,6 +170,12 @@ class ReportController extends Controller
 
     public function exportStockProducts()
     {
+        $this->dispatch(new Reports());
+        return redirect()->route('report.create');
+    }
+
+    public function exportProductsStocks()
+    {
         $File = "Archivo Primario";
         $data = array(
             array("id", "name", "description", "purchase_price", "sale_price", "available", "category_id")
@@ -178,7 +186,7 @@ class ReportController extends Controller
             if($row->available==0){
                 $row->available="agotado";
             }
-           array_push($data, array(
+            array_push($data, array(
                 $row->id,
                 $row->name,
                 $row->description,
@@ -193,5 +201,6 @@ class ReportController extends Controller
         $export = new ArchivoPrimarioExport($data);
         return Excel::download($export, $File . '.xlsx');
     }
+
 
 }

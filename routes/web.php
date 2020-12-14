@@ -54,7 +54,7 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('delete/{id}', 'OrderController@delete')->name('order.delete')->middleware('roleCustomer');
     Route::get('empty/{id}', 'OrderController@empty')->name('order.empty')->middleware('roleCustomer');
 
-    });
+});
 
 
 Route::resource('rol', RolController::class)->only([ "index","show", "edit"]);
@@ -68,5 +68,3 @@ Route::get('notes/{id}/destroy', 'NotesController@destroy')->name('notes.destroy
 Route::group(['prefix' => 'accesoDenegado'], function () {
     Route::get('accesoDenegado', 'AuthController@index')->name('accesoDenegado');
 });
-
-

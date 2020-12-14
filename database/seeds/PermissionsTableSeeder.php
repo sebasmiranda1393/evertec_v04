@@ -14,36 +14,34 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        //Permission list
-        Permission::create(['name' => 'products.index']);
-        Permission::create(['name' => 'products.edit']);
-        Permission::create(['name' => 'products.show']);
-        Permission::create(['name' => 'products.create']);
-        Permission::create(['name' => 'products.destroy']);
+        //Permission list to Administrador
+        Permission::create(['name' => 'product.edit']);
+        Permission::create(['name' => 'reports']);
+        Permission::create(['name' => 'role.edit']);
 
         //Admin
-        $admin = Role::create(['name' => 'Admin']);
+        $admin = Role::findByName("Administrador");
 
         $admin->givePermissionTo([
-            'products.index',
-            'products.edit',
-            'products.show',
-            'products.create',
-            'products.destroy'
+            'product.edit',
+            'reports',
+            'role.edit'
         ]);
         //$admin->givePermissionTo('products.index');
         //$admin->givePermissionTo(Permission::all());
 
-        //Guest
-        $guest = Role::create(['name' => 'Guest']);
+        //Permission list to usuario
+        Permission::create(['name' => 'cart.index']);
+        Permission::create(['name' => 'order']);
 
-        $guest->givePermissionTo([
-            'products.index',
-            'products.show'
+        //user
+        $user = Role::findByName("Usuario");
+
+        $user->givePermissionTo([
+            'cart.index',
+            'order'
+
         ]);
 
-        //User Admin
-        $user = User::find(1); //Italo Morales
-        $user->assignRole('Admin');
     }
 }

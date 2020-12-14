@@ -21,7 +21,7 @@
             <div class="col-sm-1">
                 <input type="submit" class=" btn btn-primary " value="Buscar"/>
             </div>
-
+            @can('cart.index')
             <div class="col-sm-1">
                 <a
                     href="{{ URL::route('order.index') }}">
@@ -32,6 +32,11 @@
                 <a href="{{ URL::route('cart.index') }}">
                     <i class="fas fa-cart-arrow-down "> mi historial de compras</i> </a>
             </div>
+            @else
+                <div class=" col-sm-1">
+                    <a href="{{ URL::route('product.index') }}" class="btn btn-primary "> Atras </a>
+                </div>
+            @endcan
         </div>
     </form>
 

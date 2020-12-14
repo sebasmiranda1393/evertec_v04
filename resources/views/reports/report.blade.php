@@ -3,11 +3,12 @@
     <div class="container">
         <div class="row justify-content">
             <body style="background-color:#AED6F1;"></body>
+            @can('reports')
 
             <div class="m-2">
                 <div class="card">
                     <div class="col m-1">
-                        <a href="{{ route('excel.exportProducts') }}" class="btn btn-primary "> Exportar productos
+                        <a href="{{ route('exportStockProducts') }}" class="btn btn-primary "> Exportar productos
                             excel</a>
                     </div>
                 </div>
@@ -91,7 +92,16 @@
             </div>
         </div>
     </div>
+    @else
+        <div class="card">
+            <div class="col m-1">
+                <label>NO TIENE PERMISOS PARA ESTA FUNCION </label>
+            </div>
 
 
+        <div class=" col-sm-1">
+            <a href="{{ route('home.index') }}" class="btn btn-primary "> Atras </a>
+        </div>
+    @endcan
 
 @endsection

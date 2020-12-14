@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -15,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('product/product', ['products' => Product::with('categoria')->get()]);
+         return view('product/product', ['products' => Product::with('categoria')->get()]);
     }
 
     /**
@@ -176,7 +178,7 @@ class ProductController extends Controller
             return view('admin/home_admin', ["products" => $products]);
 
         } else {
-            return view('admin/home_admin', ["products" => $products]);
+            return view('customer/customer_home', ["products" => $products]);
         }
     }
 }

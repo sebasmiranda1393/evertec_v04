@@ -6,6 +6,7 @@
             <th style="width:20%" class="text-center" bgcolor="#00bfff">mis compras</th>
             <th style="width:20%" class="text-center" bgcolor="#00bfff">fecha de la compra</th>
             <th style="width:20%" class="text-center" bgcolor="#00bfff">valor de mi compra</th>
+            <th style="width:20%" class="text-center" bgcolor="#00bfff">Estado de la compra</th>
             <th style="width:20%" class="text-center" bgcolor="#00bfff">ver mi compra</th>
 
 
@@ -15,20 +16,22 @@
 
         <?php $total = 0 ?>
 
-        @foreach($carts as $id => $details)
+
+        @for ($i = 0; $i < count($carts); $i++)
 
 
             <tr>
-                <td class="text-center" data-th="id">mi compra Nª{{ $details['id'] }}</td>
-                <td class="text-center" data-th="Created_at">{{ $details['created_at'] }}</td>
-                <td class="text-center"><strong>Total ${{ $details['total']}}</strong></td>
+                <td class="text-center" data-th="id">mi compra Nª{{ $carts[$i]['id'] }}</td>
+                <td class="text-center" data-th="Created_at">{{ $carts[$i]['created_at'] }}</td>
+                <td class="text-center"><strong>Total ${{ $carts[$i]['total']}}</strong></td>
+                <td data-th="created_at">{{ $status[$i]->message() }}</td>
                 <td class="text-center">
-                    <a href="{{ URL::route('cart.show', $details->id) }}">
+                    <a href="{{ URL::route('cart.show', $carts[$i]['id']) }}">
                         <i class="fas fa-eye  fa-3x"></i></a>
                 </td>
 
             </tr>
-        @endforeach
+        @endfor
 
         </tbody>
     </table>

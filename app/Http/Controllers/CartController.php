@@ -16,6 +16,18 @@ use Dnetix\Redirection\PlacetoPay;
 
 class CartController extends Controller
 {
+    protected $cartController;
+
+
+    /**
+     * CartController constructor.
+     * @param OrderController $cartController
+     */
+    public function __construct(OrderController $cartController)    {
+
+        $this->cartController = $cartController;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +35,7 @@ class CartController extends Controller
      */
     public function index()
     {
+
         $data = Cart::select('carts.id', 'carts.created_at','carts.request_id' , DB::raw('sum(products.sale_price) as total'))
             ->join('cart_products', 'carts.id', '=', 'cart_products.cart_id')
             ->join('users', 'users.id', '=', 'carts.user_id')
@@ -31,7 +44,31 @@ class CartController extends Controller
             ->groupBy('carts.id')
             ->get();
 
-        return view('cart/list_carts', ["carts" => $data]);
+        $status = array();
+
+        foreach($data as $id => $details){
+            $requestId = $details['request_id'];
+
+            $placetopay = new PlacetoPay([
+                'login' => config('placetopay.login'),
+                'tranKey' => config('placetopay.trankey'),
+                'url' => config('placetopay.url'),
+                'type' => config('placetopay.type'),
+                'rest' => [
+                    'timeout' => 45, // (optional) 15 by default
+                    'connect_timeout' => 30, // (optional) 5 by default
+                ]
+            ]);
+
+            $response = $placetopay->query($requestId);
+
+            $status[] = $response->status();
+        }
+
+
+
+
+        return view('cart/list_carts', ["carts" => $data],  ['status' => $status]);
     }
 
 

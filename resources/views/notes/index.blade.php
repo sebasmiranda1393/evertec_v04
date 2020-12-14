@@ -17,7 +17,7 @@
             <td>{{ $note->id }}</td>
             <td>{{ $note->title }}</td>
             <td>
-                @can('destroy_notes')
+                @can('product.edit')
                     <a href="{{ route('notes.destroy', $note->id) }}">Eliminar nota</a>
                 @else
                     Usted no puede eliminar esta nota

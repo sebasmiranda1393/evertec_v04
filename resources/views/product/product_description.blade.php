@@ -32,7 +32,7 @@
                                     <div class="product-image2">
                                         <a href="#">
                                             <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
-                                        <a class="add-to-cart" href="{{ route('cart.add-to-cart', $product->id) }}"
+                                        <a class="add-to-cart" href="{{ route('order.show', $product->id) }}"
                                         >Me lo llevo!</a>
                                     </div>
                                 </div>
@@ -54,5 +54,7 @@
             <hr>
         </div>
     </div>
-
+    @jquery
+    @toastr_js
+    @toastr_render
 @endsection

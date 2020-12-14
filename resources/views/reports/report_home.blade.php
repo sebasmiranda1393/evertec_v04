@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    @can('reports')
     <form action="{{ route('download_report') }}" method="POST" class="form-horizontal">
         {{ csrf_field() }}
         <table id="products" class="table table-hover table-condensed">
@@ -42,6 +43,16 @@
         <a href="{{ route('back') }}" class="btn btn-primary "> atras </a>
     </div>
     </div>
+    @else
+        <div class="card">
+            <div class="col m-1">
+                <label>NO TIENE PERMISOS PARA ESTA FUNCION </label>
+            </div>
 
+
+            <div class=" col-sm-1">
+                <a href="{{ URL::route('product.index') }}" class="btn btn-primary "> Atras </a>
+            </div>
+    @endcan
 
 @endsection

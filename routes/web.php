@@ -27,11 +27,8 @@ Route::resource('product', ProductController::class)->only(["update", "destroy",
 
 route::resource('admin', AdminController::class)->middleware('roleAdmin');
 
-Route::resource('excel', ImportProductController::class)->only(["show", "store", "index"])->middleware('roleAdmin');;
-Route::group(['prefix' => 'excel'], function () {
-    Route::get('export', 'ImportProductController@exportProducts')->name('excel.exportProducts')->middleware('roleAdmin');;
+Route::resource('excel', ImportProductController::class)->only([ "store", "index"])->middleware('roleAdmin');;
 
-});
 
 Route::resource('report', ReportController::class)->only([ "create"]);
 Route::group(['prefix' => 'report'], function () {
@@ -42,6 +39,7 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('view', 'ReportController@view')->name('view');
     Route::post('download_report', 'ReportController@download_report')->name('download_report');
     Route::get('back', 'ReportController@back')->name('back');
+    Route::get('exportStockProducts', 'ReportController@exportStockProducts')->name('exportStockProducts');
 });
 
 route::resource('cart', CartController::class)->middleware('roleCustomer');

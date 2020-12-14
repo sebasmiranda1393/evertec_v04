@@ -166,4 +166,32 @@ class ReportController extends Controller
         return view('reports/report');
     }
 
+    public function exportStockProducts()
+    {
+        $File = "Archivo Primario";
+        $data = array(
+            array("id", "name", "description", "purchase_price", "sale_price", "available", "category_id")
+        );
+        $products = Product::with('categoria')->get();
+
+        foreach ($products as $row) {
+            if($row->available==0){
+                $row->available="agotado";
+            }
+           array_push($data, array(
+                $row->id,
+                $row->name,
+                $row->description,
+                $row->purchase_price,
+                $row->sale_price,
+                $row->available,
+                $row->categoria->category
+            ));
+        }
+
+
+        $export = new ArchivoPrimarioExport($data);
+        return Excel::download($export, $File . '.xlsx');
+    }
+
 }

@@ -8,7 +8,7 @@
             <div class="m-2">
                 <div class="card">
                     <div class="col m-1">
-                        <a href="{{ route('excel.exportProducts') }}" class="btn btn-primary "> Exportar productos
+                        <a href="{{ route('exportStockProducts') }}" class="btn btn-primary "> Exportar productos
                             excel</a>
                     </div>
                 </div>

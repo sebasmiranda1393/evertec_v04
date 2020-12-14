@@ -173,7 +173,6 @@ class OrderController extends Controller
     public function commonOperations(int $idProduct, string $operations)
     {
         $product = Product::find($idProduct);
-        var_dump("entro");
         $cart = session()->get('cart');
         if ($operations == 'sum') {
             if ($product->available == 0) {
@@ -185,7 +184,7 @@ class OrderController extends Controller
             }
         } else {
             if ($cart[$idProduct]['quantity'] == 1) {
-                toastr()->warning('No hay mas existencias del producto');
+                toastr()->warning('La cantidad del producto no puede llegar a cero. Elimine el producto!');
             } else {
                 $this->updateQuantityProductByIncrement($product->id, $product->available);
                 $cart[$idProduct]['quantity']--;

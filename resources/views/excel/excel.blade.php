@@ -49,7 +49,7 @@
                     <input type="submit" name="upload" class="btn btn-primary" value="cargar el archivo">
                 </td>
                 <td width="30%" align="left">
-                    <a href="{{ URL::route('product.index') }}" class="btn btn-primary "> Atras </a>
+                    <a href="{{ URL::route('report.create') }}" class="btn btn-primary "> Atras </a>
                 </td>
             </tr>
 

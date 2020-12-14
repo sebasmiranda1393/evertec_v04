@@ -18,9 +18,11 @@ class CheckRoleAdmin
     public function handle($request, Closure $next)
     {
 
-        if (User::find(Auth::user()->id)->role_id == 2) {
-            return redirect('home');
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Administrador')) {
+            return $next($request);
+        } else {
+            return redirect()->route('accesoDenegado');
         }
-        return $next($request);
     }
 }

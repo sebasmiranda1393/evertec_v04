@@ -5,20 +5,35 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+    use HasRoles;
+    protected $guard_name = 'web';
+
+    public static function create(array $attributes )
+    {
+        return static::query()->create($attributes);
+    }
+    public static function findById(int $id)
+    {
+        return static::query()->find($id);
+    }
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
+  /*  protected $fillable = [
         'name', 'email', 'password', 'role_id',
+    ];*/
+    protected $fillable = [
+        'name', 'email', 'password',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -37,18 +52,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public static function create(array $array)
-    {
-    }
 
     /**
      * Get the rol of a user.
      */
-    public function rol(): object
+  /*  public function rol(): object
     {
         return $this->belongsTo(Role::class, 'category_id', 'id');
     }
-
+*/
 
     /**
      * Show the application dashboard.
@@ -56,11 +68,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return bool
      * @author sebastian miranda
      */
-    public function authorizeRoles($roles): bool
+   /* public function authorizeRoles($roles): bool
     {
         return $this->hasAnyRole($roles);
 
-    }
+    }*/
 
     /**
      * Show the application dashboard.
@@ -68,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return bool
      * @author sebastian miranda
      */
-    public function hasAnyRole($roles): bool
+  /*  public function hasAnyRole($roles): bool
     {
         if (is_array($roles)) {
 
@@ -86,21 +98,21 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return false;
     }
-
+*/
     /**
      * Show the application dashboard.
      * @param string $role
      * @return Boolean
      * @author sebastian miranda
      */
-    public function hasRole(string $role): bool
+  /*  public function hasRole(string $role): bool
     {
         if ($role == 1) {
             return true;
         }
         return false;
     }
-
+*/
 
 }
 

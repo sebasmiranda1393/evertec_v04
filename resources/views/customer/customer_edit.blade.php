@@ -19,22 +19,32 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="name">Nombre</label>
-                                <textarea required id="name" name="name"  cols="30" rows="1"
-                                          class="form-control" >{{ $user->name}} </textarea>
+                                <textarea required id="name" name="name" cols="30" rows="1"
+                                          class="form-control">{{ $user->name}} </textarea>
 
                             </div>
                             <div class="form-group">
                                 <label for="email">Correo electronico</label>
-                                <input type="email" class="form-control" id="email"  name="email"placeholder="ingresa email"
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="ingresa email"
                                        value={{ $user->email}}>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="status">Cambiar estado</label>
-                                <select class="form-control" id="status"  name="status">
+                                <select class="form-control" id="status" name="status">
                                     <option value="1">Habilitar</option>
                                     <option value="0">Desabilitar</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rol">rol de usuario</label>
+                                <select class="form-control" id="rol" name="rol">
+                                    @foreach ($roles as $rol)
+                                        <option value="{{ $rol->id}}">{{ $rol->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <br>
@@ -43,11 +53,11 @@
                                 <div class=" col-sm-3">
                                 </div>
                                 <div class=" col-sm-4">
-                                  <a  href="{{ route('customers.back') }}"
+                                    <a href="{{ route('customers.back') }}"
                                        class="btn btn-primary btn-lg"> Atras </a>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="submit" class=" btn btn-primary btn-lg" value="guardar" />
+                                    <input type="submit" class=" btn btn-primary btn-lg" value="guardar"/>
                                 </div>
                                 <div class=" col-sm-1">
                                 </div>

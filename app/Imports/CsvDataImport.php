@@ -28,8 +28,8 @@ class CsvDataImport implements ToCollection, WithHeadingRow
                     'sale_price' => $row['sale_price'],
                     'available' => $row['available'],
                     'productimg' => "",
-                    'status' => $row['status'],
-                    'category_id' => $row['category_id'],
+                    'status' =>1,
+                    'category_id' => 1,
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
@@ -41,8 +41,8 @@ class CsvDataImport implements ToCollection, WithHeadingRow
                         'purchase_price' => $row['purchase_price'],
                         'sale_price' => $row['sale_price'],
                         'available' => $row['available'],
-                        'status' => $row['status'],
-                        'category_id' => $row['category_id'],
+                        'status' => 1,
+                        'category_id' => 1,
                         'created_at' => now(),
                         'updated_at' => now()
                     )

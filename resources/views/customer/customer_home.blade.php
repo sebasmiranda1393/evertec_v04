@@ -21,7 +21,7 @@
             <div class="col-sm-1">
                 <input type="submit" class=" btn btn-primary " value="Buscar"/>
             </div>
-
+            @can('cart.index')
             <div class="col-sm-1">
                 <a
                     href="{{ URL::route('order.index') }}">
@@ -32,12 +32,15 @@
                 <a href="{{ URL::route('cart.index') }}">
                     <i class="fas fa-cart-arrow-down "> mi historial de compras</i> </a>
             </div>
-
-
+            @else
+                <div class=" col-sm-1">
+                    <a href="{{ URL::route('product.index') }}" class="btn btn-primary "> Atras </a>
+                </div>
+            @endcan
         </div>
-
-
     </form>
+
+  <form>
     <div class="row list-group-horizontal pt-5">
         @foreach ($products as $product)
             <div class="col-md-2 col-sm-2 offset-1">
@@ -49,30 +52,27 @@
 
                             @else
                                 <img src="{{ asset('image/products/'.$product->productimg)}}"> </a>
-                             @endif
-
+                        @endif
 
                         <a class="add-to-cart"
                            href="{{ route('order.show', $product->id) }}"
                         >Me lo llevo! </a>
-
                     </div>
+
                     <div class="product-content">
                         <h3 class="title"><a
                                 href="{{ route('product.description', $product->id) }}">{{ $product->name}} </a>
                         </h3>
                         <span class="price">${{ $product->sale_price}}</span>
                     </div>
-
-
                 </div>
             </div>
+
         @endforeach
-
-
-        <div class="col-md-2 offset-5 ">
-            {{ $products->render() }}
-        </div>
+  </form>
+            <div class="col-md-2 offset-5 ">
+                {{ $products->render() }}
+            </div>
 
         <hr>
         @jquery

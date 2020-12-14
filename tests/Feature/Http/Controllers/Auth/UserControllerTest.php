@@ -3,19 +3,23 @@
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
-  /** use RefreshDatabase;
-    protected $user;
 
-
-    public function setUp() : void
+    public function testUserCreatedSuccessfully()
     {
-        $this->user = new User;
-    } */
+            $user = new User([
+                'name' => "Test User",
+                'email' => "test@mail.com",
+                'password' => bcrypt("testpassword")
+            ]);
 
+            $this->assertEquals('Test User', $user->name);
 
+    }
 }
+
+

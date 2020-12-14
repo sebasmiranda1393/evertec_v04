@@ -13,7 +13,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        //
+        return view('accesoDenegado/acceso_denegado');
     }
 
     /**

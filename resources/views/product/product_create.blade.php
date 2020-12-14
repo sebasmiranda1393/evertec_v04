@@ -25,9 +25,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="status" class="col-md-4 col-form-label text-md-right"> Cambiar estado </label>
+                                <label for="status" class="col-md-4 col-form-label text-md-right"> Categoria </label>
                                 <div class="col-md-6">
-                                    <select class="form-control" id="status"  name="status">
+                                    <select class="form-control" id="status" name="status">
                                         <option value=1>Fruta</option>
                                         <option value=2>Bebida</option>
                                     </select>

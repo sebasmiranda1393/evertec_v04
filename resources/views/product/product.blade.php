@@ -28,13 +28,7 @@
                     <a href="{{ route('product.create') }}" class="btn btn-primary "> Crear </a>
                 </div>
 
-                <div class="col-md-3">
-                    <a href="{{ route('excel.index') }}" class="btn btn-primary "> importar excel </a>
-                </div>
 
-                <div class="col-md-3">
-                    <a href="{{ route('excel.exportProducts') }}" class="btn btn-primary "> Exportar excel </a>
-                </div>
 
             </div>
 
